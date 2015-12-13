@@ -210,6 +210,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/text-aaah.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/text-butcher.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -335,7 +339,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "432",
+			build: "447",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,

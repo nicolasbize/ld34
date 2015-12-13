@@ -110,6 +110,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -207,6 +208,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/story-mode.png", AssetType.IMAGE);
 		className.set ("assets/sprite/tavern.png", __ASSET__assets_sprite_tavern_png);
 		type.set ("assets/sprite/tavern.png", AssetType.IMAGE);
+		className.set ("assets/sprite/text-aaah.png", __ASSET__assets_sprite_text_aaah_png);
+		type.set ("assets/sprite/text-aaah.png", AssetType.IMAGE);
 		className.set ("assets/sprite/text-butcher.png", __ASSET__assets_sprite_text_butcher_png);
 		type.set ("assets/sprite/text-butcher.png", AssetType.IMAGE);
 		className.set ("assets/sprite/text-nice-hit.png", __ASSET__assets_sprite_text_nice_hit_png);
@@ -421,6 +424,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/tavern.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/text-aaah.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -640,6 +647,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/sprite/tavern.png", __ASSET__assets_sprite_tavern_png);
 		type.set ("assets/sprite/tavern.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/text-aaah.png", __ASSET__assets_sprite_text_aaah_png);
+		type.set ("assets/sprite/text-aaah.png", AssetType.IMAGE);
 		
 		className.set ("assets/sprite/text-butcher.png", __ASSET__assets_sprite_text_butcher_png);
 		type.set ("assets/sprite/text-butcher.png", AssetType.IMAGE);
@@ -1377,6 +1387,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_small_blood_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_story_mode_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_tavern_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_text_aaah_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_text_butcher_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_text_nice_hit_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_text_porridge_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1396,6 +1407,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
 
 
 
@@ -1512,6 +1524,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/small-blood.png") #if display private #end class __ASSET__assets_sprite_small_blood_png extends lime.graphics.Image {}
 @:image("assets/sprite/story-mode.png") #if display private #end class __ASSET__assets_sprite_story_mode_png extends lime.graphics.Image {}
 @:image("assets/sprite/tavern.png") #if display private #end class __ASSET__assets_sprite_tavern_png extends lime.graphics.Image {}
+@:image("assets/sprite/text-aaah.png") #if display private #end class __ASSET__assets_sprite_text_aaah_png extends lime.graphics.Image {}
 @:image("assets/sprite/text-butcher.png") #if display private #end class __ASSET__assets_sprite_text_butcher_png extends lime.graphics.Image {}
 @:image("assets/sprite/text-nice-hit.png") #if display private #end class __ASSET__assets_sprite_text_nice_hit_png extends lime.graphics.Image {}
 @:image("assets/sprite/text-porridge.png") #if display private #end class __ASSET__assets_sprite_text_porridge_png extends lime.graphics.Image {}

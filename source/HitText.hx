@@ -27,6 +27,7 @@ class HitText extends FlxSprite
     }
 
     public function setHit(superHit:String) {
+        this.y = 48;
         if (superHit == "head") {
             loadGraphic("assets/sprite/text-butcher.png", false);
             this.x = 111;
@@ -36,11 +37,14 @@ class HitText extends FlxSprite
         } else if (superHit == "leftarm" || superHit == "rightarm") {
             this.x = 100;
             loadGraphic("assets/sprite/text-porridge.png", false);
+        } else if (superHit == "king") {
+            this.x = 90;
+            this.y = 37;
+            loadGraphic("assets/sprite/text-aaah.png", false);
         } else {
             loadGraphic("assets/sprite/text-nice-hit.png", false);
             this.x = 128;
         }
-        this.y = 48;
     }
 
     override public function update():Void {

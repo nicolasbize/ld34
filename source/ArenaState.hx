@@ -75,10 +75,10 @@ class ArenaState extends FlxState
         hitText.arena = this;
         this.add(sideVictim);
         this.add(executer);
-        // executer.getInPosition();
+        executer.getInPosition();
         totalTime = 0;
 
-        createArrow(95, "head");
+        // createArrow(95, "king");
 
         super.create();
     }
@@ -87,10 +87,12 @@ class ArenaState extends FlxState
         super.update();
         totalTime++;
         timer++;
-        if (currentStep == 1 && timer > 40 && FlxG.keys.anyPressed(["X"])) {
-            blackScreen = new Tuto(0, 0, "black");
-            this.add(blackScreen);
-            Timer.delay(loadTavern, currentMission < 5 ? 1000 : 2000);
+        if (!hasEnded) {
+            if (currentStep == 1 && timer > 40 && (FlxG.keys.anyPressed(["X"]) || kingDead)) {
+                blackScreen = new Tuto(0, 0, "black");
+                this.add(blackScreen);
+                Timer.delay(loadTavern, currentMission < 5 ? 1000 : 2000);
+            }
         }
     }
 
@@ -179,9 +181,8 @@ class ArenaState extends FlxState
         if (pow >= powerToggle && arrow.willHit != "torso") {
             arrow.setPowered();
         }
-        if (arrow.willHit == "") {
-            arrow.velocity.x =  40 + pow * 2.5;
-        } else if (arrow.willHit == "head" || arrow.willHit == "rightarm") {
+        arrow.velocity.x =  40 + pow * 2.5;
+        if (arrow.willHit == "head" || arrow.willHit == "rightarm") {
             hitHeadArea(arrow, pow);
         } else if (arrow.willHit == "torso") {
             hitTorsoArea(arrow, pow);
@@ -191,6 +192,11 @@ class ArenaState extends FlxState
             hitLeftLegArea(arrow, pow);
         } else if (arrow.willHit == "rightleg") {
             hitRightLegArea(arrow, pow);
+        } else if (arrow.willHit == "king" && arrow.powered) {
+            arrow.velocity.x =  350;
+            arrow.velocity.y = -40;
+            arrow.angle = -12;
+            kingDead = true;
         }
     }
 
@@ -284,18 +290,26 @@ class ArenaState extends FlxState
             return "leftleg";
         } else if (point.x >= 98 && point.x <= 101 && point.y >= 64 && point.y <= 68) {
             return "head";
+        } else if (currentMission == 5 && point.x >= 114 && point.y >= 64 && point.y < 69) {
+            return "king";
         }
         return "";
     }
 
     public function makeSmallBlood(arrow:Arrow) {
-        var blood = new SmallBlood(arrow.x + 2, arrow.y);
-        smallBloods.push(blood);
-        this.add(blood);
-        hitText.setHit("");
-        this.add(hitText);
-        hitText.startAnim();
-        victimLife -= arrow.willHit == "head" ? 5 : 3;
+        if (!kingDead) {
+            var blood = new SmallBlood(arrow.x + 2, arrow.y);
+            smallBloods.push(blood);
+            this.add(blood);
+            hitText.setHit("");
+            this.add(hitText);
+            hitText.startAnim();
+            victimLife -= arrow.willHit == "head" ? 5 : 3;
+        } else {
+            hitText.setHit("king");
+            this.add(hitText);
+            hitText.startAnim();
+        }
     }
 
     public function makeExplosion(arrow:Arrow) {
@@ -325,14 +339,20 @@ class ArenaState extends FlxState
     }
 
     public function notifyNextHit(): Void {
-        if (victimLife > 0) {
-            reticle.resetCmp();
-            power.resetCmp();
-            hitText.resetCmp();
-            executer.startAiming();
-        } else {
+        if (kingDead) {
             executer.animation.play("happy");
-            Timer.delay(showScore, 2000);
+            this.currentStep = 1;
+            timer = 0;
+        } else {
+            if (victimLife > 0) {
+                reticle.resetCmp();
+                power.resetCmp();
+                hitText.resetCmp();
+                executer.startAiming();
+            } else {
+                executer.animation.play("happy");
+                Timer.delay(showScore, 2000);
+            }
         }
     }
 

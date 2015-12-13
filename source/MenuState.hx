@@ -28,14 +28,14 @@ class MenuState extends FlxState
     {
         FlxG.log.redirectTraces = true;
 
-        FlxG.switchState(new ArenaState(0, 5));
+        // FlxG.switchState(new ArenaState(0, 5));
 
-        // this.add(new FlxSprite().loadGraphic("assets/sprite/black.png", false));
-        // tavern = new Tavern(0, 0);
-        // tavern.menu = this;
-        // this.add(tavern);
-        // Timer.delay(showTitle, 1000);
-        // super.create();
+        this.add(new FlxSprite().loadGraphic("assets/sprite/black.png", false));
+        tavern = new Tavern(0, 0);
+        tavern.menu = this;
+        this.add(tavern);
+        Timer.delay(showTitle, 1000);
+        super.create();
     }
 
     public function showTitle(): Void {

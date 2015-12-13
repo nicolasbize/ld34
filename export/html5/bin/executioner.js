@@ -1528,6 +1528,8 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/sprite/tavern.png");
 	types.push("IMAGE");
+	urls.push("assets/sprite/text-aaah.png");
+	types.push("IMAGE");
 	urls.push("assets/sprite/text-butcher.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/text-nice-hit.png");
@@ -1582,7 +1584,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "432", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
+	ApplicationMain.config = { build : "447", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3530,17 +3532,19 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.add(this.sideVictim);
 		this.add(this.executer);
 		this.totalTime = 0;
-		this.createArrow(95,"head");
+		this.createArrow(95,"king");
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,update: function() {
 		flixel_FlxState.prototype.update.call(this);
 		this.totalTime++;
 		this.timer++;
-		if(this.currentStep == 1 && this.timer > 40 && flixel_FlxG.keys.checkKeyStatus(["X"],1)) {
-			this.blackScreen = new Tuto(0,0,"black");
-			this.add(this.blackScreen);
-			haxe_Timer.delay($bind(this,this.loadTavern),this.currentMission < 5?1000:2000);
+		if(!this.hasEnded) {
+			if(this.currentStep == 1 && this.timer > 40 && (flixel_FlxG.keys.checkKeyStatus(["X"],1) || this.kingDead)) {
+				this.blackScreen = new Tuto(0,0,"black");
+				this.add(this.blackScreen);
+				haxe_Timer.delay($bind(this,this.loadTavern),this.currentMission < 5?1000:2000);
+			}
 		}
 	}
 	,loadTavern: function() {
@@ -3609,7 +3613,13 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 	}
 	,handleHits: function(arrow,pow) {
 		if(pow >= this.powerToggle && arrow.willHit != "torso") arrow.setPowered();
-		if(arrow.willHit == "") arrow.velocity.set_x(40 + pow * 2.5); else if(arrow.willHit == "head" || arrow.willHit == "rightarm") this.hitHeadArea(arrow,pow); else if(arrow.willHit == "torso") this.hitTorsoArea(arrow,pow); else if(arrow.willHit == "leftarm") this.hitLeftArmArea(arrow,pow); else if(arrow.willHit == "leftleg") this.hitLeftLegArea(arrow,pow); else if(arrow.willHit == "rightleg") this.hitRightLegArea(arrow,pow);
+		arrow.velocity.set_x(40 + pow * 2.5);
+		if(arrow.willHit == "head" || arrow.willHit == "rightarm") this.hitHeadArea(arrow,pow); else if(arrow.willHit == "torso") this.hitTorsoArea(arrow,pow); else if(arrow.willHit == "leftarm") this.hitLeftArmArea(arrow,pow); else if(arrow.willHit == "leftleg") this.hitLeftLegArea(arrow,pow); else if(arrow.willHit == "rightleg") this.hitRightLegArea(arrow,pow); else if(arrow.willHit == "king" && arrow.powered) {
+			arrow.velocity.set_x(350);
+			arrow.velocity.set_y(-40);
+			arrow.set_angle(-12);
+			this.kingDead = true;
+		}
 	}
 	,hitHeadArea: function(arrow,pow) {
 		if(pow < this.powerToggle) {
@@ -3689,17 +3699,23 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		return pos;
 	}
 	,getHitBodyPart: function(point) {
-		if(point.x >= 93 && point.x <= 97 && point.y >= 66 && point.y <= 69) return "rightarm"; else if(point.x >= 94 && point.x <= 99 && point.y >= 74 && point.y <= 81) return "rightleg"; else if(point.x >= 97 && point.x <= 102 && point.y >= 68 && point.y <= 74) return "torso"; else if(point.x >= 101 && point.x <= 106 && point.y >= 66 && point.y <= 69) return "leftarm"; else if(point.x >= 99 && point.x <= 105 && point.y >= 74 && point.y <= 81) return "leftleg"; else if(point.x >= 98 && point.x <= 101 && point.y >= 64 && point.y <= 68) return "head";
+		if(point.x >= 93 && point.x <= 97 && point.y >= 66 && point.y <= 69) return "rightarm"; else if(point.x >= 94 && point.x <= 99 && point.y >= 74 && point.y <= 81) return "rightleg"; else if(point.x >= 97 && point.x <= 102 && point.y >= 68 && point.y <= 74) return "torso"; else if(point.x >= 101 && point.x <= 106 && point.y >= 66 && point.y <= 69) return "leftarm"; else if(point.x >= 99 && point.x <= 105 && point.y >= 74 && point.y <= 81) return "leftleg"; else if(point.x >= 98 && point.x <= 101 && point.y >= 64 && point.y <= 68) return "head"; else if(this.currentMission == 5 && point.x >= 114 && point.y >= 64 && point.y < 69) return "king";
 		return "";
 	}
 	,makeSmallBlood: function(arrow) {
-		var blood = new SmallBlood(arrow.x + 2,arrow.y);
-		this.smallBloods.push(blood);
-		this.add(blood);
-		this.hitText.setHit("");
-		this.add(this.hitText);
-		this.hitText.startAnim();
-		if(arrow.willHit == "head") this.victimLife -= 5; else this.victimLife -= 3;
+		if(!this.kingDead) {
+			var blood = new SmallBlood(arrow.x + 2,arrow.y);
+			this.smallBloods.push(blood);
+			this.add(blood);
+			this.hitText.setHit("");
+			this.add(this.hitText);
+			this.hitText.startAnim();
+			if(arrow.willHit == "head") this.victimLife -= 5; else this.victimLife -= 3;
+		} else {
+			this.hitText.setHit("king");
+			this.add(this.hitText);
+			this.hitText.startAnim();
+		}
 	}
 	,makeExplosion: function(arrow) {
 		var explosion = new Explosion(arrow.x - 3,arrow.y - 5);
@@ -3715,7 +3731,11 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		if(arrow.willHit == "head") this.bonusHead = true; else if(arrow.willHit == "leftleg") this.bonusLeftLeg = true; else if(arrow.willHit == "leftarm") this.bonusLeftArm = true; else if(arrow.willHit == "rightleg") this.bonusRightLeg = true; else if(arrow.willHit == "rightarm") this.bonusRightArm = true;
 	}
 	,notifyNextHit: function() {
-		if(this.victimLife > 0) {
+		if(this.kingDead) {
+			this.executer.animation.play("happy");
+			this.currentStep = 1;
+			this.timer = 0;
+		} else if(this.victimLife > 0) {
 			this.reticle.resetCmp();
 			this.power.resetCmp();
 			this.hitText.resetCmp();
@@ -4022,6 +4042,9 @@ var DefaultAssetLibrary = function() {
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/tavern.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/text-aaah.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/text-butcher.png";
@@ -5117,6 +5140,7 @@ HitText.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.acceleration = new flixel_util_FlxPoint(0,0);
 	}
 	,setHit: function(superHit) {
+		this.set_y(48);
 		if(superHit == "head") {
 			this.loadGraphic("assets/sprite/text-butcher.png",false);
 			this.set_x(111);
@@ -5126,11 +5150,14 @@ HitText.prototype = $extend(flixel_FlxSprite.prototype,{
 		} else if(superHit == "leftarm" || superHit == "rightarm") {
 			this.set_x(100);
 			this.loadGraphic("assets/sprite/text-porridge.png",false);
+		} else if(superHit == "king") {
+			this.set_x(90);
+			this.set_y(37);
+			this.loadGraphic("assets/sprite/text-aaah.png",false);
 		} else {
 			this.loadGraphic("assets/sprite/text-nice-hit.png",false);
 			this.set_x(128);
 		}
-		this.set_y(48);
 	}
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
