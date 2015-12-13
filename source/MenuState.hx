@@ -28,7 +28,7 @@ class MenuState extends FlxState
     {
         FlxG.log.redirectTraces = true;
 
-        startGame();
+        FlxG.switchState(new ArenaState(0, 5));
 
         // this.add(new FlxSprite().loadGraphic("assets/sprite/black.png", false));
         // tavern = new Tavern(0, 0);

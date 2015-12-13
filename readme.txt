@@ -42,9 +42,9 @@ OK basic drawing done... let's tune it in photoshop!!
 Todo List:
 
     X    Menu
-        Missions
+    X    Missions
     X    How to play
-        Level end + subscores
+    X    Level end + subscores
         Ending : 2 ends + final score
         Spectators
         Sound
@@ -55,29 +55,8 @@ Todo List:
         High scores
 
 
-How to play:
-Slow down the reticle using (X) for better aiming.
-The focus will only last 3 seconds. Shoot fast
-
-Press (C) to power-up. Release to shoot.
-
-Time to draw king + widow... going to the tablet brb...
-
-
-
-Replace keys by x and c
-
-Story: 1315 ad. in the land of ludumia, Eugene the executioner was peacefully enjoying his fifth pint of golden beer. He had gained fame through his archery skills which made him a close friend of our most gracious, honorable and gifted king Nicolas IV
-
-Mission one: Magello
-Mission two: T Foods
-Mission three: Alattin
-Mission four: ghanzi
-Mission five: bella
-
 On Dec 13, 2015 2:47 AM, nicolasbize@gmail.com wrote:
 
-    Now drink!
     King in stands for last shot
 
     Sub score

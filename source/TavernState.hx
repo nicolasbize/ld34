@@ -21,6 +21,10 @@ class TavernState extends FlxState
     private var currentStep:Int = 0;
     private var x:Tuto = null;
     private var blackScreen:Tuto = null;
+    private var widowCame:Bool = false;
+    private var widow:Tuto = null;
+    private var widowDialog:Tuto = null;
+
 
     public function new(gold:Int, mission:Int) {
         currentGold = gold;
@@ -64,6 +68,16 @@ class TavernState extends FlxState
         timer = 0;
     }
 
+    private function showWidowDialog(): Void {
+        widowDialog = new Tuto(2, 1, "text-spare");
+        this.add(widowDialog);
+        x = new Tuto(176, 106, "x");
+        this.add(x);
+        currentStep = 2;
+        timer = 0;
+        widowCame = true;
+    }
+
     override public function update():Void {
         super.update();
         timer++;
@@ -71,9 +85,27 @@ class TavernState extends FlxState
             if (currentStep == 0 && timer > 40) {
                 showTavern();
             } else if (currentStep == 2 && timer > 40) {
-                prepareArena();
+                if (currentMission == 5) {
+                    if (!widowCame && timer > 120) {
+                        kingDialog.isFading = true;
+                        king.isFading = true;
+                        x.isFading = true;
+                        Timer.delay(showLady, 1000);
+                    } else if (widowCame) {
+                        prepareArena();
+                    }
+                } else if (timer > 40){
+                    prepareArena();
+                }
             }
         }
+    }
+
+    private function showLady():Void {
+        widow = new Tuto(133, 28, "lady");
+        this.add(widow);
+        timer = 0;
+        Timer.delay(showWidowDialog, 1000);
     }
 
     private function prepareArena() {

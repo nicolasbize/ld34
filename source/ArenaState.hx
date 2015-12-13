@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
+import flixel.text.FlxText;
 import haxe.Timer;
 
 /**
@@ -31,6 +32,21 @@ class ArenaState extends FlxState
     public var hitText:HitText = null;
     private var powerToggle:Int = 94;
     private var victimLife = 10;
+    private var scoreBoard:Tuto = null;
+    private var arrowsUsed:Int = 0;
+    private var totalTime:Int = 0;
+    private var bonusHead:Bool = false;
+    private var bonusLeftArm:Bool = false;
+    private var bonusRightArm:Bool = false;
+    private var bonusLeftLeg:Bool = false;
+    private var bonusRightLeg:Bool = false;
+    private var currentStep:Int = 0;
+    private var x:Tuto = null;
+    private var timer:Int = 0;
+    private var blackScreen:Tuto = null;
+    private var king:FlxSprite = null;
+    private var kingDead:Bool = false;
+    private var hasEnded = false;
 
     public function new(gold:Int, mission:Int) {
         currentGold = gold;
@@ -51,30 +67,72 @@ class ArenaState extends FlxState
         windText = new WindText(83, 99);
         reticle = new Reticle(0, 0);
         power = new PowerGauge(0, 0);
-        sideVictim = new SideVictim(0, 0);
         power.arena = this;
         executer.arena = this;
         frontVictim = new FrontVictim(0, 0);
+        sideVictim = new SideVictim(0, 0);
         hitText = new HitText(0, 0);
         hitText.arena = this;
         this.add(sideVictim);
         this.add(executer);
-        executer.getInPosition();
-        // aim();
-        // createArrow(95, "rightarm");
+        // executer.getInPosition();
+        totalTime = 0;
+
+        createArrow(95, "head");
 
         super.create();
+    }
+
+    override public function update():Void {
+        super.update();
+        totalTime++;
+        timer++;
+        if (currentStep == 1 && timer > 40 && FlxG.keys.anyPressed(["X"])) {
+            blackScreen = new Tuto(0, 0, "black");
+            this.add(blackScreen);
+            Timer.delay(loadTavern, currentMission < 5 ? 1000 : 2000);
+        }
+    }
+
+    private function loadTavern() {
+        if (currentMission < 5) {
+            FlxG.switchState(new TavernState(currentGold, currentMission + 1));
+        } else {
+            // ending
+            if (!hasEnded) {
+                hasEnded = true;
+                if (!kingDead) {
+                    this.add(new Tuto(0, 0, "end-evil"));
+                } else {
+                    this.add(new Tuto(0, 0, "end-good"));
+                }
+                Timer.delay(showTotalScore, 1000);
+            }
+        }
+    }
+
+    private function showTotalScore(): Void {
+        this.add(new FlxText(126, 79, 26, Std.string(currentGold), 8));
     }
 
     public function aim():Void {
         windDirection = FlxRandom.intRanged(0, 3);
         windIntensity = FlxRandom.intRanged(3, 20);
+        if (currentMission == 5) {
+            windDirection = 1;
+            windIntensity = 30;
+        }
         this.add(aimPanel);
         wind.setDir(windDirection);
         this.add(wind);
         windText.setValue(windIntensity);
         this.add(windText);
         this.add(frontVictim);
+        if (currentMission == 5) {
+            king = new FlxSprite(122, 64);
+            king.loadGraphic("assets/sprite/frontking.png", false);
+            this.add(king);
+        }
         this.add(reticle);
         this.add(power);
     }
@@ -99,6 +157,7 @@ class ArenaState extends FlxState
         this.remove(reticle);
         this.remove(power);
         this.remove(frontVictim);
+        this.remove(king);
         var adjustedReticle = getAdjustedReticlePos();
         var hit = getHitBodyPart(getAdjustedReticlePos());
         createArrow(power.getValue(), hit);
@@ -112,6 +171,7 @@ class ArenaState extends FlxState
         handleHits(arrow, pow);
         arrows.push(arrow);
         this.add(arrow);
+        arrowsUsed += 1;
         return arrow;
     }
 
@@ -251,6 +311,17 @@ class ArenaState extends FlxState
             this.remove(arrow);
         }
         victimLife -= arrow.willHit == "head" ? 10 : 6;
+        if (arrow.willHit == "head") {
+            bonusHead = true;
+        } else if(arrow.willHit == "leftleg") {
+            bonusLeftLeg = true;
+        } else if (arrow.willHit == "leftarm") {
+            bonusLeftArm = true;
+        } else if (arrow.willHit == "rightleg") {
+            bonusRightLeg = true;
+        } else if (arrow.willHit == "rightarm") {
+            bonusRightArm = true;
+        }
     }
 
     public function notifyNextHit(): Void {
@@ -261,7 +332,62 @@ class ArenaState extends FlxState
             executer.startAiming();
         } else {
             executer.animation.play("happy");
+            Timer.delay(showScore, 2000);
         }
+    }
+
+    private function getBonusPoints(): Int {
+        if ((currentMission == 1 && bonusHead) ||
+            (currentMission == 2 && (bonusLeftLeg || bonusRightLeg)) ||
+            (currentMission == 3 && bonusRightArm) ||
+            (currentMission == 4 && bonusLeftArm && bonusLeftLeg)) {
+            return 100;
+        }
+        if (currentMission == 5 && totalTime < 360) {
+            return 100;
+        }
+        return 0;
+    }
+
+    private function showScore():Void {
+        var gained:Int = 0;
+        gained += getBonusPoints();
+        if (arrowsUsed == 1) {
+            gained += 100;
+        } else if(arrowsUsed == 2) {
+            gained += 70;
+        } else if (arrowsUsed == 3) {
+            gained += 50;
+        } else if (arrowsUsed == 4) {
+            gained += 30;
+        } else {
+            gained += 10;
+        }
+        var spent:Int = Std.int(totalTime / 60);
+        if (spent < 30) {
+            gained += 100;
+        } else if (spent < 35) {
+            gained += 70;
+        } else if (spent < 40) {
+            gained += 50;
+        } else if (spent < 45) {
+            gained += 30;
+        } else if (spent < 50) {
+            gained += 10;
+        }
+        scoreBoard = new Tuto(53, 16, "scoreboard");
+        this.add(scoreBoard);
+        this.add(new FlxText(109, 24, 28, Std.string(arrowsUsed), 8));
+        this.add(new FlxText(110, 34, 26, Std.string(Std.int(totalTime / 60)), 8));
+        this.add(new FlxText(96, 44, 26, Std.string(getBonusPoints()), 8));
+        this.add(new FlxText(106, 65, 26, Std.string(gained), 8));
+        currentGold += gained;
+        this.add(new FlxText(110, 75, 26, Std.string(currentGold), 8));
+        x = new Tuto(176, 106, "x");
+        this.add(x);
+        this.currentStep = 1;
+        timer = 0;
+
     }
 
 

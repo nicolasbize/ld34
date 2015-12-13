@@ -50,6 +50,14 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/end-evil.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/end-good.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/executer.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -83,6 +91,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/front-torso.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/frontking.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -155,6 +167,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/reticle2.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/scoreboard.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -319,7 +335,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "391",
+			build: "432",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,

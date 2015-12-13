@@ -106,6 +106,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -123,6 +127,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/arrow2.png", AssetType.IMAGE);
 		className.set ("assets/sprite/black.png", __ASSET__assets_sprite_black_png);
 		type.set ("assets/sprite/black.png", AssetType.IMAGE);
+		className.set ("assets/sprite/end-evil.png", __ASSET__assets_sprite_end_evil_png);
+		type.set ("assets/sprite/end-evil.png", AssetType.IMAGE);
+		className.set ("assets/sprite/end-good.png", __ASSET__assets_sprite_end_good_png);
+		type.set ("assets/sprite/end-good.png", AssetType.IMAGE);
 		className.set ("assets/sprite/executer.png", __ASSET__assets_sprite_executer_png);
 		type.set ("assets/sprite/executer.png", AssetType.IMAGE);
 		className.set ("assets/sprite/explosion.png", __ASSET__assets_sprite_explosion_png);
@@ -141,6 +149,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/front-right-leg.png", AssetType.IMAGE);
 		className.set ("assets/sprite/front-torso.png", __ASSET__assets_sprite_front_torso_png);
 		type.set ("assets/sprite/front-torso.png", AssetType.IMAGE);
+		className.set ("assets/sprite/frontking.png", __ASSET__assets_sprite_frontking_png);
+		type.set ("assets/sprite/frontking.png", AssetType.IMAGE);
 		className.set ("assets/sprite/how-to-play.png", __ASSET__assets_sprite_how_to_play_png);
 		type.set ("assets/sprite/how-to-play.png", AssetType.IMAGE);
 		className.set ("assets/sprite/intro.png", __ASSET__assets_sprite_intro_png);
@@ -177,6 +187,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/reticle.png", AssetType.IMAGE);
 		className.set ("assets/sprite/reticle2.png", __ASSET__assets_sprite_reticle2_png);
 		type.set ("assets/sprite/reticle2.png", AssetType.IMAGE);
+		className.set ("assets/sprite/scoreboard.png", __ASSET__assets_sprite_scoreboard_png);
+		type.set ("assets/sprite/scoreboard.png", AssetType.IMAGE);
 		className.set ("assets/sprite/side-head.png", __ASSET__assets_sprite_side_head_png);
 		type.set ("assets/sprite/side-head.png", AssetType.IMAGE);
 		className.set ("assets/sprite/side-left-arm.png", __ASSET__assets_sprite_side_left_arm_png);
@@ -252,6 +264,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/end-evil.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/end-good.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/executer.png";
 		path.set (id, id);
 		
@@ -285,6 +305,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/front-torso.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/frontking.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -357,6 +381,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/reticle2.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/scoreboard.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -493,6 +521,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/sprite/black.png", __ASSET__assets_sprite_black_png);
 		type.set ("assets/sprite/black.png", AssetType.IMAGE);
 		
+		className.set ("assets/sprite/end-evil.png", __ASSET__assets_sprite_end_evil_png);
+		type.set ("assets/sprite/end-evil.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/end-good.png", __ASSET__assets_sprite_end_good_png);
+		type.set ("assets/sprite/end-good.png", AssetType.IMAGE);
+		
 		className.set ("assets/sprite/executer.png", __ASSET__assets_sprite_executer_png);
 		type.set ("assets/sprite/executer.png", AssetType.IMAGE);
 		
@@ -519,6 +553,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/sprite/front-torso.png", __ASSET__assets_sprite_front_torso_png);
 		type.set ("assets/sprite/front-torso.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/frontking.png", __ASSET__assets_sprite_frontking_png);
+		type.set ("assets/sprite/frontking.png", AssetType.IMAGE);
 		
 		className.set ("assets/sprite/how-to-play.png", __ASSET__assets_sprite_how_to_play_png);
 		type.set ("assets/sprite/how-to-play.png", AssetType.IMAGE);
@@ -573,6 +610,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/sprite/reticle2.png", __ASSET__assets_sprite_reticle2_png);
 		type.set ("assets/sprite/reticle2.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/scoreboard.png", __ASSET__assets_sprite_scoreboard_png);
+		type.set ("assets/sprite/scoreboard.png", AssetType.IMAGE);
 		
 		className.set ("assets/sprite/side-head.png", __ASSET__assets_sprite_side_head_png);
 		type.set ("assets/sprite/side-head.png", AssetType.IMAGE);
@@ -1297,6 +1337,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_arrow_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_arrow2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_black_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_end_evil_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_end_good_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_executer_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_explosion_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_font_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1306,6 +1348,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_front_right_arm_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_front_right_leg_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_front_torso_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_frontking_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_how_to_play_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_intro_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_king_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1324,6 +1367,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_power_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_reticle_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_reticle2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_scoreboard_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_head_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_left_arm_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_left_leg_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1408,6 +1452,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
+
+
 @:keep #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__assets_fonts_arial_ttf extends lime.text.Font { public function new () { super (); name = "Arial"; } } 
 
@@ -1424,6 +1472,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/arrow.png") #if display private #end class __ASSET__assets_sprite_arrow_png extends lime.graphics.Image {}
 @:image("assets/sprite/arrow2.png") #if display private #end class __ASSET__assets_sprite_arrow2_png extends lime.graphics.Image {}
 @:image("assets/sprite/black.png") #if display private #end class __ASSET__assets_sprite_black_png extends lime.graphics.Image {}
+@:image("assets/sprite/end-evil.png") #if display private #end class __ASSET__assets_sprite_end_evil_png extends lime.graphics.Image {}
+@:image("assets/sprite/end-good.png") #if display private #end class __ASSET__assets_sprite_end_good_png extends lime.graphics.Image {}
 @:image("assets/sprite/executer.png") #if display private #end class __ASSET__assets_sprite_executer_png extends lime.graphics.Image {}
 @:image("assets/sprite/explosion.png") #if display private #end class __ASSET__assets_sprite_explosion_png extends lime.graphics.Image {}
 @:image("assets/sprite/font.png") #if display private #end class __ASSET__assets_sprite_font_png extends lime.graphics.Image {}
@@ -1433,6 +1483,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/front-right-arm.png") #if display private #end class __ASSET__assets_sprite_front_right_arm_png extends lime.graphics.Image {}
 @:image("assets/sprite/front-right-leg.png") #if display private #end class __ASSET__assets_sprite_front_right_leg_png extends lime.graphics.Image {}
 @:image("assets/sprite/front-torso.png") #if display private #end class __ASSET__assets_sprite_front_torso_png extends lime.graphics.Image {}
+@:image("assets/sprite/frontking.png") #if display private #end class __ASSET__assets_sprite_frontking_png extends lime.graphics.Image {}
 @:image("assets/sprite/how-to-play.png") #if display private #end class __ASSET__assets_sprite_how_to_play_png extends lime.graphics.Image {}
 @:image("assets/sprite/intro.png") #if display private #end class __ASSET__assets_sprite_intro_png extends lime.graphics.Image {}
 @:image("assets/sprite/king.png") #if display private #end class __ASSET__assets_sprite_king_png extends lime.graphics.Image {}
@@ -1451,6 +1502,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/power.png") #if display private #end class __ASSET__assets_sprite_power_png extends lime.graphics.Image {}
 @:image("assets/sprite/reticle.png") #if display private #end class __ASSET__assets_sprite_reticle_png extends lime.graphics.Image {}
 @:image("assets/sprite/reticle2.png") #if display private #end class __ASSET__assets_sprite_reticle2_png extends lime.graphics.Image {}
+@:image("assets/sprite/scoreboard.png") #if display private #end class __ASSET__assets_sprite_scoreboard_png extends lime.graphics.Image {}
 @:image("assets/sprite/side-head.png") #if display private #end class __ASSET__assets_sprite_side_head_png extends lime.graphics.Image {}
 @:image("assets/sprite/side-left-arm.png") #if display private #end class __ASSET__assets_sprite_side_left_arm_png extends lime.graphics.Image {}
 @:image("assets/sprite/side-left-leg.png") #if display private #end class __ASSET__assets_sprite_side_left_leg_png extends lime.graphics.Image {}

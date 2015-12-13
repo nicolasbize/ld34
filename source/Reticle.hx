@@ -24,6 +24,7 @@ class Reticle extends FlxSprite
     public var isAiming:Bool = false;
     private var hasAimed:Bool = false;
     private var frozen:Bool = false;
+    private var aimTimer = 0;
 
     public function new(x:Float, y:Float) {
         super(x, y);
@@ -60,13 +61,14 @@ class Reticle extends FlxSprite
             xPressed = FlxG.keys.anyPressed(["X"]);
 
             if (xPressed && !isAiming && !hasAimed) {
+                aimTimer++;
                 isAiming = true;
                 anchor = new FlxPoint(x, y);
                 velocity = new FlxPoint(velocity.x / 6, velocity.y / 6);
                 acceleration = new FlxPoint(acceleration.x / 6, acceleration.y / 6);
                 loadGraphic("assets/sprite/reticle2.png", false);
-                hasAimed = true;
-            } else if (isAiming && !xPressed) {
+                // hasAimed = true;
+            } else if (isAiming && (!xPressed || aimTimer > 120)) {
                 isAiming = false;
                 anchor = middle;
                 loadGraphic("assets/sprite/reticle.png", false);

@@ -1448,6 +1448,10 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/sprite/black.png");
 	types.push("IMAGE");
+	urls.push("assets/sprite/end-evil.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/end-good.png");
+	types.push("IMAGE");
 	urls.push("assets/sprite/executer.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/explosion.png");
@@ -1465,6 +1469,8 @@ ApplicationMain.create = function() {
 	urls.push("assets/sprite/front-right-leg.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/front-torso.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/frontking.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/how-to-play.png");
 	types.push("IMAGE");
@@ -1501,6 +1507,8 @@ ApplicationMain.create = function() {
 	urls.push("assets/sprite/reticle.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/reticle2.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/scoreboard.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/side-head.png");
 	types.push("IMAGE");
@@ -1574,7 +1582,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "391", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
+	ApplicationMain.config = { build : "432", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3428,6 +3436,21 @@ flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
 	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
 });
 var ArenaState = function(gold,mission) {
+	this.hasEnded = false;
+	this.kingDead = false;
+	this.king = null;
+	this.blackScreen = null;
+	this.timer = 0;
+	this.x = null;
+	this.currentStep = 0;
+	this.bonusRightLeg = false;
+	this.bonusLeftLeg = false;
+	this.bonusRightArm = false;
+	this.bonusLeftArm = false;
+	this.bonusHead = false;
+	this.totalTime = 0;
+	this.arrowsUsed = 0;
+	this.scoreBoard = null;
 	this.victimLife = 10;
 	this.powerToggle = 94;
 	this.hitText = null;
@@ -3472,6 +3495,21 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 	,hitText: null
 	,powerToggle: null
 	,victimLife: null
+	,scoreBoard: null
+	,arrowsUsed: null
+	,totalTime: null
+	,bonusHead: null
+	,bonusLeftArm: null
+	,bonusRightArm: null
+	,bonusLeftLeg: null
+	,bonusRightLeg: null
+	,currentStep: null
+	,x: null
+	,timer: null
+	,blackScreen: null
+	,king: null
+	,kingDead: null
+	,hasEnded: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
 		flixel_FlxG.game["debugger"].watch.add(flixel_FlxG,"mouse","Mouse Position");
@@ -3483,26 +3521,56 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.windText = new WindText(83,99);
 		this.reticle = new Reticle(0,0);
 		this.power = new PowerGauge(0,0);
-		this.sideVictim = new SideVictim(0,0);
 		this.power.arena = this;
 		this.executer.arena = this;
 		this.frontVictim = new FrontVictim(0,0);
+		this.sideVictim = new SideVictim(0,0);
 		this.hitText = new HitText(0,0);
 		this.hitText.arena = this;
 		this.add(this.sideVictim);
 		this.add(this.executer);
-		this.executer.getInPosition();
+		this.totalTime = 0;
+		this.createArrow(95,"head");
 		flixel_FlxState.prototype.create.call(this);
+	}
+	,update: function() {
+		flixel_FlxState.prototype.update.call(this);
+		this.totalTime++;
+		this.timer++;
+		if(this.currentStep == 1 && this.timer > 40 && flixel_FlxG.keys.checkKeyStatus(["X"],1)) {
+			this.blackScreen = new Tuto(0,0,"black");
+			this.add(this.blackScreen);
+			haxe_Timer.delay($bind(this,this.loadTavern),this.currentMission < 5?1000:2000);
+		}
+	}
+	,loadTavern: function() {
+		if(this.currentMission < 5) flixel_FlxG.switchState(new TavernState(this.currentGold,this.currentMission + 1)); else if(!this.hasEnded) {
+			this.hasEnded = true;
+			if(!this.kingDead) this.add(new Tuto(0,0,"end-evil")); else this.add(new Tuto(0,0,"end-good"));
+			haxe_Timer.delay($bind(this,this.showTotalScore),1000);
+		}
+	}
+	,showTotalScore: function() {
+		this.add(new flixel_text_FlxText(126,79,26,Std.string(this.currentGold),8));
 	}
 	,aim: function() {
 		this.windDirection = flixel_util_FlxRandom.intRanged(0,3);
 		this.windIntensity = flixel_util_FlxRandom.intRanged(3,20);
+		if(this.currentMission == 5) {
+			this.windDirection = 1;
+			this.windIntensity = 30;
+		}
 		this.add(this.aimPanel);
 		this.wind.setDir(this.windDirection);
 		this.add(this.wind);
 		this.windText.setValue(this.windIntensity);
 		this.add(this.windText);
 		this.add(this.frontVictim);
+		if(this.currentMission == 5) {
+			this.king = new flixel_FlxSprite(122,64);
+			this.king.loadGraphic("assets/sprite/frontking.png",false);
+			this.add(this.king);
+		}
 		this.add(this.reticle);
 		this.add(this.power);
 	}
@@ -3523,6 +3591,7 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.remove(this.reticle);
 		this.remove(this.power);
 		this.remove(this.frontVictim);
+		this.remove(this.king);
 		var adjustedReticle = this.getAdjustedReticlePos();
 		var hit = this.getHitBodyPart(this.getAdjustedReticlePos());
 		this.createArrow(this.power.getValue(),hit);
@@ -3535,6 +3604,7 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.handleHits(arrow,pow);
 		this.arrows.push(arrow);
 		this.add(arrow);
+		this.arrowsUsed += 1;
 		return arrow;
 	}
 	,handleHits: function(arrow,pow) {
@@ -3642,6 +3712,7 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.hitText.startAnim();
 		if(arrow.powered) this.remove(arrow);
 		if(arrow.willHit == "head") this.victimLife -= 10; else this.victimLife -= 6;
+		if(arrow.willHit == "head") this.bonusHead = true; else if(arrow.willHit == "leftleg") this.bonusLeftLeg = true; else if(arrow.willHit == "leftarm") this.bonusLeftArm = true; else if(arrow.willHit == "rightleg") this.bonusRightLeg = true; else if(arrow.willHit == "rightarm") this.bonusRightArm = true;
 	}
 	,notifyNextHit: function() {
 		if(this.victimLife > 0) {
@@ -3649,7 +3720,34 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 			this.power.resetCmp();
 			this.hitText.resetCmp();
 			this.executer.startAiming();
-		} else this.executer.animation.play("happy");
+		} else {
+			this.executer.animation.play("happy");
+			haxe_Timer.delay($bind(this,this.showScore),2000);
+		}
+	}
+	,getBonusPoints: function() {
+		if(this.currentMission == 1 && this.bonusHead || this.currentMission == 2 && (this.bonusLeftLeg || this.bonusRightLeg) || this.currentMission == 3 && this.bonusRightArm || this.currentMission == 4 && this.bonusLeftArm && this.bonusLeftLeg) return 100;
+		if(this.currentMission == 5 && this.totalTime < 360) return 100;
+		return 0;
+	}
+	,showScore: function() {
+		var gained = 0;
+		gained += this.getBonusPoints();
+		if(this.arrowsUsed == 1) gained += 100; else if(this.arrowsUsed == 2) gained += 70; else if(this.arrowsUsed == 3) gained += 50; else if(this.arrowsUsed == 4) gained += 30; else gained += 10;
+		var spent = this.totalTime / 60 | 0;
+		if(spent < 30) gained += 100; else if(spent < 35) gained += 70; else if(spent < 40) gained += 50; else if(spent < 45) gained += 30; else if(spent < 50) gained += 10;
+		this.scoreBoard = new Tuto(53,16,"scoreboard");
+		this.add(this.scoreBoard);
+		this.add(new flixel_text_FlxText(109,24,28,Std.string(this.arrowsUsed),8));
+		this.add(new flixel_text_FlxText(110,34,26,Std.string(this.totalTime / 60 | 0),8));
+		this.add(new flixel_text_FlxText(96,44,26,Std.string(this.getBonusPoints()),8));
+		this.add(new flixel_text_FlxText(106,65,26,gained == null?"null":"" + gained,8));
+		this.currentGold += gained;
+		this.add(new flixel_text_FlxText(110,75,26,Std.string(this.currentGold),8));
+		this.x = new Tuto(176,106,"x");
+		this.add(this.x);
+		this.currentStep = 1;
+		this.timer = 0;
 	}
 	,__class__: ArenaState
 });
@@ -3806,6 +3904,12 @@ var DefaultAssetLibrary = function() {
 	id = "assets/sprite/black.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/sprite/end-evil.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/end-good.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
 	id = "assets/sprite/executer.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
@@ -3831,6 +3935,9 @@ var DefaultAssetLibrary = function() {
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/front-torso.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/frontking.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/how-to-play.png";
@@ -3885,6 +3992,9 @@ var DefaultAssetLibrary = function() {
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/reticle2.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/scoreboard.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/side-head.png";
@@ -5237,7 +5347,7 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	,button2: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
-		this.startGame();
+		flixel_FlxG.switchState(new ArenaState(0,5));
 	}
 	,showTitle: function() {
 		this.title = new Title(90,0);
@@ -5479,6 +5589,7 @@ Reflect.makeVarArgs = function(f) {
 	};
 };
 var Reticle = function(x,y) {
+	this.aimTimer = 0;
 	this.frozen = false;
 	this.hasAimed = false;
 	this.isAiming = false;
@@ -5513,6 +5624,7 @@ Reticle.prototype = $extend(flixel_FlxSprite.prototype,{
 	,isAiming: null
 	,hasAimed: null
 	,frozen: null
+	,aimTimer: null
 	,resetCmp: function() {
 		this.setPosition(flixel_util_FlxRandom.intRanged(this.xLowLimit,this.xHighLimit),flixel_util_FlxRandom.intRanged(this.yLowLimit,this.yHighLimit));
 		this.anchor = this.middle;
@@ -5542,13 +5654,13 @@ Reticle.prototype = $extend(flixel_FlxSprite.prototype,{
 			this.setPosition(newX,newY);
 			this.xPressed = flixel_FlxG.keys.checkKeyStatus(["X"],1);
 			if(this.xPressed && !this.isAiming && !this.hasAimed) {
+				this.aimTimer++;
 				this.isAiming = true;
 				this.anchor = new flixel_util_FlxPoint(this.x,this.y);
 				this.velocity = new flixel_util_FlxPoint(this.velocity.x / 6,this.velocity.y / 6);
 				this.acceleration = new flixel_util_FlxPoint(this.acceleration.x / 6,this.acceleration.y / 6);
 				this.loadGraphic("assets/sprite/reticle2.png",false);
-				this.hasAimed = true;
-			} else if(this.isAiming && !this.xPressed) {
+			} else if(this.isAiming && (!this.xPressed || this.aimTimer > 120)) {
 				this.isAiming = false;
 				this.anchor = this.middle;
 				this.loadGraphic("assets/sprite/reticle.png",false);
@@ -5731,6 +5843,9 @@ Tavern.prototype = $extend(flixel_FlxSprite.prototype,{
 	,__class__: Tavern
 });
 var TavernState = function(gold,mission) {
+	this.widowDialog = null;
+	this.widow = null;
+	this.widowCame = false;
 	this.blackScreen = null;
 	this.x = null;
 	this.currentStep = 0;
@@ -5759,6 +5874,9 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 	,currentStep: null
 	,x: null
 	,blackScreen: null
+	,widowCame: null
+	,widow: null
+	,widowDialog: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
 		this.add(new flixel_FlxSprite().loadGraphic("assets/sprite/black.png",false));
@@ -5789,12 +5907,36 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 		this.currentStep = 2;
 		this.timer = 0;
 	}
+	,showWidowDialog: function() {
+		this.widowDialog = new Tuto(2,1,"text-spare");
+		this.add(this.widowDialog);
+		this.x = new Tuto(176,106,"x");
+		this.add(this.x);
+		this.currentStep = 2;
+		this.timer = 0;
+		this.widowCame = true;
+	}
 	,update: function() {
 		flixel_FlxState.prototype.update.call(this);
 		this.timer++;
 		if(flixel_FlxG.keys.checkKeyStatus(["X"],1)) {
-			if(this.currentStep == 0 && this.timer > 40) this.showTavern(); else if(this.currentStep == 2 && this.timer > 40) this.prepareArena();
+			if(this.currentStep == 0 && this.timer > 40) this.showTavern(); else if(this.currentStep == 2 && this.timer > 40) {
+				if(this.currentMission == 5) {
+					if(!this.widowCame && this.timer > 120) {
+						this.kingDialog.isFading = true;
+						this.king.isFading = true;
+						this.x.isFading = true;
+						haxe_Timer.delay($bind(this,this.showLady),1000);
+					} else if(this.widowCame) this.prepareArena();
+				} else if(this.timer > 40) this.prepareArena();
+			}
 		}
+	}
+	,showLady: function() {
+		this.widow = new Tuto(133,28,"lady");
+		this.add(this.widow);
+		this.timer = 0;
+		haxe_Timer.delay($bind(this,this.showWidowDialog),1000);
 	}
 	,prepareArena: function() {
 		this.blackScreen = new Tuto(0,0,"black");
