@@ -46,4 +46,23 @@ class FrontVictim extends FlxSpriteGroup {
     }
 
 
+    public function removePart(part:String) {
+        if (part == "torso") {
+            this.remove(torso);
+        } else if (part == "leftleg") {
+            this.remove(leftLeg);
+        } else if (part == "rightleg") {
+            this.remove(rightLeg);
+        } else if (part == "torso") {
+            this.remove(torso);
+        } else if (part == "rightarm") {
+            this.remove(rightArm);
+        } else if (part == "leftarm") {
+            this.remove(leftArm);
+        } else if (part == "head") {
+            this.remove(head);
+        }
+    }
+
+
 }

@@ -1444,7 +1444,11 @@ ApplicationMain.create = function() {
 	types.push("IMAGE");
 	urls.push("assets/sprite/arrow.png");
 	types.push("IMAGE");
+	urls.push("assets/sprite/arrow2.png");
+	types.push("IMAGE");
 	urls.push("assets/sprite/executer.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/explosion.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/font.png");
 	types.push("IMAGE");
@@ -1479,6 +1483,16 @@ ApplicationMain.create = function() {
 	urls.push("assets/sprite/side-right-leg.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/side-torso.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/small-blood.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/text-butcher.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/text-nice-hit.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/text-porridge.png");
+	types.push("IMAGE");
+	urls.push("assets/sprite/text-smashed.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/wind.png");
 	types.push("IMAGE");
@@ -1516,7 +1530,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "188", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
+	ApplicationMain.config = { build : "330", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3370,8 +3384,13 @@ flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
 	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
 });
 var ArenaState = function(MaxSize) {
+	this.victimLife = 10;
+	this.powerToggle = 94;
+	this.hitText = null;
 	this.sideVictim = null;
 	this.frontVictim = null;
+	this.explosions = [];
+	this.smallBloods = [];
 	this.arrows = [];
 	this.power = null;
 	this.reticle = null;
@@ -3396,8 +3415,13 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 	,reticle: null
 	,power: null
 	,arrows: null
+	,smallBloods: null
+	,explosions: null
 	,frontVictim: null
 	,sideVictim: null
+	,hitText: null
+	,powerToggle: null
+	,victimLife: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
 		flixel_FlxG.game["debugger"].watch.add(flixel_FlxG,"mouse","Mouse Position");
@@ -3413,7 +3437,11 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.power.arena = this;
 		this.executer.arena = this;
 		this.frontVictim = new FrontVictim(0,0);
+		this.hitText = new HitText(0,0);
+		this.hitText.arena = this;
 		this.add(this.sideVictim);
+		this.add(this.executer);
+		this.executer.getInPosition();
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,aim: function() {
@@ -3445,17 +3473,82 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.remove(this.reticle);
 		this.remove(this.power);
 		this.remove(this.frontVictim);
-		var arrow = new Arrow(29,81);
-		arrow.velocity.set_x(40 + this.power.getValue() * 2.5);
 		var adjustedReticle = this.getAdjustedReticlePos();
-		if(this.power.getValue() > 70) arrow.willHit = this.getHitBodyPart(adjustedReticle);
+		var hit = this.getHitBodyPart(this.getAdjustedReticlePos());
+		this.createArrow(this.power.getValue(),hit);
+		this.executer.animation.play("shoot");
+	}
+	,createArrow: function(pow,hit) {
+		var arrow = new Arrow(29,81);
+		arrow.willHit = hit;
+		arrow.arena = this;
+		this.handleHits(arrow,pow);
 		this.arrows.push(arrow);
 		this.add(arrow);
-		this.executer.animation.play("shoot");
+		return arrow;
+	}
+	,handleHits: function(arrow,pow) {
+		if(pow >= this.powerToggle && arrow.willHit != "torso") arrow.setPowered();
+		if(arrow.willHit == "") arrow.velocity.set_x(40 + pow * 2.5); else if(arrow.willHit == "head" || arrow.willHit == "rightarm") this.hitHeadArea(arrow,pow); else if(arrow.willHit == "torso") this.hitTorsoArea(arrow,pow); else if(arrow.willHit == "leftarm") this.hitLeftArmArea(arrow,pow); else if(arrow.willHit == "leftleg") this.hitLeftLegArea(arrow,pow); else if(arrow.willHit == "rightleg") this.hitRightLegArea(arrow,pow);
+	}
+	,hitHeadArea: function(arrow,pow) {
+		if(pow < this.powerToggle) {
+			arrow.velocity.set_y(-20);
+			arrow.velocity.set_x(240);
+			arrow.set_angle(-15);
+		} else {
+			arrow.velocity.set_y(-15);
+			arrow.velocity.set_x(310);
+			arrow.set_angle(-12);
+		}
+	}
+	,hitTorsoArea: function(arrow,pow) {
+		if(pow < this.powerToggle) {
+			arrow.velocity.set_y(-10);
+			arrow.velocity.set_x(240);
+			arrow.set_angle(-5);
+		} else {
+			arrow.velocity.set_y(-8);
+			arrow.velocity.set_x(330);
+			arrow.set_angle(-5);
+		}
+	}
+	,hitLeftArmArea: function(arrow,pow) {
+		if(pow < this.powerToggle) {
+			arrow.velocity.set_y(-10);
+			arrow.velocity.set_x(240);
+			arrow.set_angle(-5);
+		} else {
+			arrow.velocity.set_y(-8);
+			arrow.velocity.set_x(330);
+			arrow.set_angle(-9);
+		}
+	}
+	,hitLeftLegArea: function(arrow,pow) {
+		if(pow < this.powerToggle) {
+			arrow.velocity.set_y(2);
+			arrow.velocity.set_x(240);
+			arrow.set_angle(-5);
+		} else {
+			arrow.velocity.set_y(8);
+			arrow.velocity.set_x(330);
+			arrow.set_angle(-9);
+		}
+	}
+	,hitRightLegArea: function(arrow,pow) {
+		if(pow < this.powerToggle) {
+			arrow.velocity.set_y(1);
+			arrow.velocity.set_x(240);
+			arrow.set_angle(-4);
+		} else {
+			arrow.velocity.set_y(5);
+			arrow.velocity.set_x(330);
+			arrow.set_angle(-8);
+		}
 	}
 	,getAdjustedReticlePos: function() {
 		var pos = new flixel_util_FlxPoint(this.reticle.x,this.reticle.y);
-		var delta = this.windIntensity / 3 | 0;
+		var delta = this.windIntensity / 5 | 0;
 		if(this.windDirection == 0) {
 			var _g = pos;
 			_g.set_y(_g.y - delta);
@@ -3469,15 +3562,47 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 			var _g3 = pos;
 			_g3.set_y(_g3.y + delta);
 		}
+		var _g4 = pos;
+		_g4.set_x(_g4.x + Std["int"](this.reticle.get_width() / 2));
+		var _g5 = pos;
+		_g5.set_y(_g5.y + Std["int"](this.reticle.get_height() / 2));
 		return pos;
 	}
 	,getHitBodyPart: function(point) {
-		if(point.x >= 93 && point.x <= 97 && point.y >= 66 && point.y <= 68) return "rightarm"; else if(point.x >= 94 && point.x <= 98 && point.y >= 74 && point.y <= 80) return "rightleg"; else if(point.x >= 97 && point.x <= 101 && point.y >= 68 && point.y <= 73) return "torso"; else if(point.x >= 101 && point.x <= 105 && point.y >= 66 && point.y <= 68) return "leftarm"; else if(point.x >= 99 && point.x <= 104 && point.y >= 74 && point.y <= 80) return "leftleg"; else if(point.x >= 98 && point.x <= 100 && point.y >= 64 && point.y <= 67) return "head";
+		if(point.x >= 93 && point.x <= 97 && point.y >= 66 && point.y <= 69) return "rightarm"; else if(point.x >= 94 && point.x <= 99 && point.y >= 74 && point.y <= 81) return "rightleg"; else if(point.x >= 97 && point.x <= 102 && point.y >= 68 && point.y <= 74) return "torso"; else if(point.x >= 101 && point.x <= 106 && point.y >= 66 && point.y <= 69) return "leftarm"; else if(point.x >= 99 && point.x <= 105 && point.y >= 74 && point.y <= 81) return "leftleg"; else if(point.x >= 98 && point.x <= 101 && point.y >= 64 && point.y <= 68) return "head";
 		return "";
+	}
+	,makeSmallBlood: function(arrow) {
+		var blood = new SmallBlood(arrow.x + 2,arrow.y);
+		this.smallBloods.push(blood);
+		this.add(blood);
+		this.hitText.setHit("");
+		this.add(this.hitText);
+		this.hitText.startAnim();
+		if(arrow.willHit == "head") this.victimLife -= 5; else this.victimLife -= 3;
+	}
+	,makeExplosion: function(arrow) {
+		var explosion = new Explosion(arrow.x - 3,arrow.y - 5);
+		this.explosions.push(explosion);
+		this.add(explosion);
+		this.sideVictim.removePart(arrow.willHit);
+		this.frontVictim.removePart(arrow.willHit);
+		this.hitText.setHit(arrow.willHit);
+		this.add(this.hitText);
+		this.hitText.startAnim();
+		if(arrow.powered) this.remove(arrow);
+		if(arrow.willHit == "head") this.victimLife -= 10; else this.victimLife -= 6;
+	}
+	,notifyNextHit: function() {
+		if(this.victimLife > 0) {
+			this.executer.startAiming();
+			haxe_Log.trace("start aiming",{ fileName : "ArenaState.hx", lineNumber : 251, className : "ArenaState", methodName : "notifyNextHit"});
+		}
 	}
 	,__class__: ArenaState
 });
 var Arrow = function(x,y) {
+	this.powered = false;
 	this.willHit = "";
 	this.moving = true;
 	this.xPressed = false;
@@ -3485,6 +3610,7 @@ var Arrow = function(x,y) {
 	this.isShooting = false;
 	this.arena = null;
 	flixel_FlxSprite.call(this,x,y);
+	this.set_angle(-12);
 	this.loadGraphic("assets/sprite/arrow.png",false);
 	this.acceleration.set_y(30);
 	this.acceleration.set_x(-2);
@@ -3499,23 +3625,35 @@ Arrow.prototype = $extend(flixel_FlxSprite.prototype,{
 	,xPressed: null
 	,moving: null
 	,willHit: null
+	,powered: null
+	,setPowered: function() {
+		this.loadGraphic("assets/sprite/arrow2.png",false);
+		this.powered = true;
+	}
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
 		if(this.moving) {
 			var _g = this;
 			_g.set_angle(_g.angle + 0.3);
-		}
-		if(this.y > 90) this.stop();
-		if(this.willHit != "") {
-			if(this.willHit == "rightarm") {
+			if(this.y > 90 || this.x > 300) this.miss();
+			if(this.willHit != "") {
+				if(this.willHit == "rightarm" && this.x > 162 && this.x <= 167 && this.y >= 74 && this.y <= 78) this.stop(); else if(this.willHit == "head" && this.x >= 165 && this.x <= 173 && this.y >= 72 && this.y <= 78) this.stop(); else if(this.willHit == "torso" && this.x >= 163 && this.x <= 172 && this.y >= 76 && this.y <= 83) this.stop(); else if(this.willHit == "leftarm" && this.x > 169 && this.x <= 175 && this.y >= 77 && this.y <= 81) this.stop(); else if(this.willHit == "rightleg" && this.x > 161 && this.x <= 171 && this.y >= 83 && this.y <= 90) this.stop(); else if(this.willHit == "leftleg" && this.x > 166 && this.x <= 171 && this.y >= 84 && this.y <= 90) this.stop();
 			}
 		}
 	}
+	,miss: function() {
+		this.stop();
+		haxe_Timer.delay(($_=this.arena,$bind($_,$_.notifyNextHit)),1000);
+	}
 	,stop: function() {
 		this.acceleration.set_y(0);
+		this.acceleration.set_x(0);
 		this.velocity.set_x(0);
 		this.velocity.set_y(0);
 		this.moving = false;
+		if(this.willHit != "") {
+			if(this.powered && this.willHit != "torso") this.arena.makeExplosion(this); else this.arena.makeSmallBlood(this);
+		}
 	}
 	,__class__: Arrow
 });
@@ -3612,7 +3750,13 @@ var DefaultAssetLibrary = function() {
 	id = "assets/sprite/arrow.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
+	id = "assets/sprite/arrow2.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
 	id = "assets/sprite/executer.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/explosion.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/font.png";
@@ -3664,6 +3808,21 @@ var DefaultAssetLibrary = function() {
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/side-torso.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/small-blood.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/text-butcher.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/text-nice-hit.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/text-porridge.png";
+	this.path.set(id,id);
+	this.type.set(id,"IMAGE");
+	id = "assets/sprite/text-smashed.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
 	id = "assets/sprite/wind.png";
@@ -4052,6 +4211,18 @@ Executer.prototype = $extend(flixel_FlxSprite.prototype,{
 		haxe_Timer.delay($bind(this,this.getAimCross),1000);
 	}
 	,__class__: Executer
+});
+var Explosion = function(x,y) {
+	flixel_FlxSprite.call(this,x,y);
+	this.loadGraphic("assets/sprite/explosion.png",true,10,10);
+	this.animation.add("flow",[0,1,2,3,4,5,6,7,8],15,false);
+	this.animation.play("flow");
+};
+$hxClasses["Explosion"] = Explosion;
+Explosion.__name__ = ["Explosion"];
+Explosion.__super__ = flixel_FlxSprite;
+Explosion.prototype = $extend(flixel_FlxSprite.prototype,{
+	__class__: Explosion
 });
 var flixel_group_FlxTypedSpriteGroup = function(X,Y,MaxSize) {
 	if(MaxSize == null) MaxSize = 0;
@@ -4688,7 +4859,73 @@ FrontVictim.prototype = $extend(flixel_group_FlxSpriteGroup.prototype,{
 	,rightArm: null
 	,leftArm: null
 	,head: null
+	,removePart: function(part) {
+		if(part == "torso") this.remove(this.torso); else if(part == "leftleg") this.remove(this.leftLeg); else if(part == "rightleg") this.remove(this.rightLeg); else if(part == "torso") this.remove(this.torso); else if(part == "rightarm") this.remove(this.rightArm); else if(part == "leftarm") this.remove(this.leftArm); else if(part == "head") this.remove(this.head);
+	}
 	,__class__: FrontVictim
+});
+var HitText = function(x,y) {
+	this.arena = null;
+	this.timer = 0;
+	this.stopping = false;
+	this.started = false;
+	flixel_FlxSprite.call(this,x,y);
+	this.set_alpha(0);
+};
+$hxClasses["HitText"] = HitText;
+HitText.__name__ = ["HitText"];
+HitText.__super__ = flixel_FlxSprite;
+HitText.prototype = $extend(flixel_FlxSprite.prototype,{
+	started: null
+	,stopping: null
+	,timer: null
+	,arena: null
+	,setHit: function(superHit) {
+		if(superHit == "head") {
+			this.loadGraphic("assets/sprite/text-butcher.png",false);
+			this.set_x(111);
+		} else if(superHit == "leftleg" || superHit == "rightleg") {
+			this.set_x(111);
+			this.loadGraphic("assets/sprite/text-smashed.png",false);
+		} else if(superHit == "leftarm" || superHit == "rightarm") {
+			this.set_x(100);
+			this.loadGraphic("assets/sprite/text-porridge.png",false);
+		} else {
+			this.loadGraphic("assets/sprite/text-nice-hit.png",false);
+			this.set_x(128);
+		}
+		this.set_y(48);
+	}
+	,update: function() {
+		flixel_FlxSprite.prototype.update.call(this);
+		if(this.started) {
+			this.timer += 1;
+			if(this.timer < 40) {
+				this.scale = new flixel_util_FlxPoint(this.scale.x + 0.01,this.scale.y + 0.01);
+				var _g = this;
+				_g.set_alpha(_g.alpha + 0.05);
+				if(this.alpha > 1) this.set_alpha(1);
+			} else this.stopAnim();
+		}
+		if(this.stopping) {
+			var _g1 = this;
+			_g1.set_alpha(_g1.alpha - 0.05);
+			if(this.alpha == 0) {
+				this.arena.notifyNextHit();
+				this.stopping = false;
+			}
+		}
+	}
+	,startAnim: function() {
+		this.started = true;
+		this.velocity.set_y(5);
+		this.acceleration.set_y(-2);
+	}
+	,stopAnim: function() {
+		this.started = false;
+		this.stopping = true;
+	}
+	,__class__: HitText
 });
 var HxOverrides = function() { };
 $hxClasses["HxOverrides"] = HxOverrides;
@@ -4906,10 +5143,7 @@ PowerGauge.prototype = $extend(flixel_FlxSprite.prototype,{
 		}
 	}
 	,start: function() {
-		if(!this.started) {
-			haxe_Log.trace("starting",{ fileName : "PowerGauge.hx", lineNumber : 45, className : "PowerGauge", methodName : "start"});
-			this.started = true;
-		}
+		if(!this.started) this.started = true;
 	}
 	,stop: function() {
 		if(this.started) {
@@ -5055,7 +5289,6 @@ Reticle.prototype = $extend(flixel_FlxSprite.prototype,{
 				this.acceleration = new flixel_util_FlxPoint(this.acceleration.x * 6,this.acceleration.y * 6);
 			}
 		}
-		haxe_Log.trace(this.x | 0,{ fileName : "Reticle.hx", lineNumber : 67, className : "Reticle", methodName : "update", customParams : [this.y | 0]});
 	}
 	,freeze: function() {
 		this.frozen = true;
@@ -5068,7 +5301,7 @@ var SideVictim = function(x,y) {
 	flixel_group_FlxSpriteGroup.call(this);
 	this.torso = new flixel_FlxSprite();
 	this.torso.loadGraphic("assets/sprite/side-torso.png",false);
-	this.torso.setPosition(166,74);
+	this.torso.setPosition(166,75);
 	this.add(this.torso);
 	this.leftLeg = new flixel_FlxSprite();
 	this.leftLeg.loadGraphic("assets/sprite/side-left-leg.png",false);
@@ -5078,6 +5311,18 @@ var SideVictim = function(x,y) {
 	this.rightLeg.loadGraphic("assets/sprite/side-right-leg.png",false);
 	this.rightLeg.setPosition(165,84);
 	this.add(this.rightLeg);
+	this.leftArm = new flixel_FlxSprite();
+	this.leftArm.loadGraphic("assets/sprite/side-left-arm.png",false);
+	this.leftArm.setPosition(172,76);
+	this.add(this.leftArm);
+	this.rightArm = new flixel_FlxSprite();
+	this.rightArm.loadGraphic("assets/sprite/side-right-arm.png",false);
+	this.rightArm.setPosition(164,74);
+	this.add(this.rightArm);
+	this.head = new flixel_FlxSprite();
+	this.head.loadGraphic("assets/sprite/side-head.png",false);
+	this.head.setPosition(168,71);
+	this.add(this.head);
 };
 $hxClasses["SideVictim"] = SideVictim;
 SideVictim.__name__ = ["SideVictim"];
@@ -5089,7 +5334,22 @@ SideVictim.prototype = $extend(flixel_group_FlxSpriteGroup.prototype,{
 	,rightArm: null
 	,leftArm: null
 	,head: null
+	,removePart: function(part) {
+		if(part == "torso") this.remove(this.torso); else if(part == "leftleg") this.remove(this.leftLeg); else if(part == "rightleg") this.remove(this.rightLeg); else if(part == "torso") this.remove(this.torso); else if(part == "rightarm") this.remove(this.rightArm); else if(part == "leftarm") this.remove(this.leftArm); else if(part == "head") this.remove(this.head);
+	}
 	,__class__: SideVictim
+});
+var SmallBlood = function(x,y) {
+	flixel_FlxSprite.call(this,x,y);
+	this.loadGraphic("assets/sprite/small-blood.png",true,6,6);
+	this.animation.add("flow",[0,1,2,3,4,5],10,false);
+	this.animation.play("flow");
+};
+$hxClasses["SmallBlood"] = SmallBlood;
+SmallBlood.__name__ = ["SmallBlood"];
+SmallBlood.__super__ = flixel_FlxSprite;
+SmallBlood.prototype = $extend(flixel_FlxSprite.prototype,{
+	__class__: SmallBlood
 });
 var Std = function() { };
 $hxClasses["Std"] = Std;

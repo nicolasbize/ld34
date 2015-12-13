@@ -21,9 +21,20 @@ class PowerGauge extends FlxSprite
     public function new(x:Float, y:Float) {
         super(x, y);
         loadGraphic("assets/sprite/power.png", false);
+        resetCmp();
+    }
+
+    public function resetCmp(): Void {
         setPosition(85, 105);
         origin = new FlxPoint(0, 0);
         scale = new FlxPoint(scaleX, 1);
+        timer = 10;
+        scaleX = 0;
+        origin = new FlxPoint(0, 0);
+        scale = new FlxPoint(scaleX, 1);
+        started = false;
+        stopped = false;
+        dir = 1;
     }
 
     override public function update():Void {
@@ -42,7 +53,6 @@ class PowerGauge extends FlxSprite
 
     public function start():Void {
         if (!started) {
-            trace("starting");
             started = true;
         }
     }

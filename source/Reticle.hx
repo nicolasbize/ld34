@@ -28,8 +28,18 @@ class Reticle extends FlxSprite
     public function new(x:Float, y:Float) {
         super(x, y);
         loadGraphic("assets/sprite/reticle.png", false);
+        resetCmp();
+    }
+
+    public function resetCmp():Void {
         setPosition(FlxRandom.intRanged(xLowLimit, xHighLimit), FlxRandom.intRanged(yLowLimit, yHighLimit));
         anchor = middle;
+        timer = 100;
+        customAccel = new FlxPoint(0, 0);
+        zPressed = false;
+        isAiming = false;
+        hasAimed = false;
+        frozen = false;
     }
 
     override public function update():Void {
@@ -64,7 +74,6 @@ class Reticle extends FlxSprite
                 acceleration = new FlxPoint(acceleration.x * 6, acceleration.y * 6);
             }
         }
-        trace(Std.int(x), Std.int(y));
     }
 
     public function freeze():Void {

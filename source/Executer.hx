@@ -53,7 +53,7 @@ class Executer extends FlxSprite
         arena.aim();
     }
 
-    private function startAiming():Void {
+    public function startAiming():Void {
         animation.play("aim");
         Timer.delay(getAimCross, 1000);
     }

@@ -42,7 +42,15 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/arrow2.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/executer.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/explosion.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -111,6 +119,26 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/side-torso.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/small-blood.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/text-butcher.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/text-nice-hit.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/text-porridge.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/text-smashed.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -203,7 +231,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "188",
+			build: "332",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,

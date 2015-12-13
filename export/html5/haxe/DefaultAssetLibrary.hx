@@ -77,6 +77,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -90,8 +97,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/arena.png", AssetType.IMAGE);
 		className.set ("assets/sprite/arrow.png", __ASSET__assets_sprite_arrow_png);
 		type.set ("assets/sprite/arrow.png", AssetType.IMAGE);
+		className.set ("assets/sprite/arrow2.png", __ASSET__assets_sprite_arrow2_png);
+		type.set ("assets/sprite/arrow2.png", AssetType.IMAGE);
 		className.set ("assets/sprite/executer.png", __ASSET__assets_sprite_executer_png);
 		type.set ("assets/sprite/executer.png", AssetType.IMAGE);
+		className.set ("assets/sprite/explosion.png", __ASSET__assets_sprite_explosion_png);
+		type.set ("assets/sprite/explosion.png", AssetType.IMAGE);
 		className.set ("assets/sprite/font.png", __ASSET__assets_sprite_font_png);
 		type.set ("assets/sprite/font.png", AssetType.IMAGE);
 		className.set ("assets/sprite/front-head.png", __ASSET__assets_sprite_front_head_png);
@@ -126,6 +137,16 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sprite/side-right-leg.png", AssetType.IMAGE);
 		className.set ("assets/sprite/side-torso.png", __ASSET__assets_sprite_side_torso_png);
 		type.set ("assets/sprite/side-torso.png", AssetType.IMAGE);
+		className.set ("assets/sprite/small-blood.png", __ASSET__assets_sprite_small_blood_png);
+		type.set ("assets/sprite/small-blood.png", AssetType.IMAGE);
+		className.set ("assets/sprite/text-butcher.png", __ASSET__assets_sprite_text_butcher_png);
+		type.set ("assets/sprite/text-butcher.png", AssetType.IMAGE);
+		className.set ("assets/sprite/text-nice-hit.png", __ASSET__assets_sprite_text_nice_hit_png);
+		type.set ("assets/sprite/text-nice-hit.png", AssetType.IMAGE);
+		className.set ("assets/sprite/text-porridge.png", __ASSET__assets_sprite_text_porridge_png);
+		type.set ("assets/sprite/text-porridge.png", AssetType.IMAGE);
+		className.set ("assets/sprite/text-smashed.png", __ASSET__assets_sprite_text_smashed_png);
+		type.set ("assets/sprite/text-smashed.png", AssetType.IMAGE);
 		className.set ("assets/sprite/wind.png", __ASSET__assets_sprite_wind_png);
 		type.set ("assets/sprite/wind.png", AssetType.IMAGE);
 		className.set ("assets/sounds/beep.mp3", __ASSET__assets_sounds_beep_mp3);
@@ -157,7 +178,15 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/arrow2.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/executer.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/explosion.png";
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
@@ -229,6 +258,26 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/small-blood.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/text-butcher.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/text-nice-hit.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/text-porridge.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
+		id = "assets/sprite/text-smashed.png";
+		path.set (id, id);
+		
+		type.set (id, AssetType.IMAGE);
 		id = "assets/sprite/wind.png";
 		path.set (id, id);
 		
@@ -284,8 +333,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/sprite/arrow.png", __ASSET__assets_sprite_arrow_png);
 		type.set ("assets/sprite/arrow.png", AssetType.IMAGE);
 		
+		className.set ("assets/sprite/arrow2.png", __ASSET__assets_sprite_arrow2_png);
+		type.set ("assets/sprite/arrow2.png", AssetType.IMAGE);
+		
 		className.set ("assets/sprite/executer.png", __ASSET__assets_sprite_executer_png);
 		type.set ("assets/sprite/executer.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/explosion.png", __ASSET__assets_sprite_explosion_png);
+		type.set ("assets/sprite/explosion.png", AssetType.IMAGE);
 		
 		className.set ("assets/sprite/font.png", __ASSET__assets_sprite_font_png);
 		type.set ("assets/sprite/font.png", AssetType.IMAGE);
@@ -337,6 +392,21 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		className.set ("assets/sprite/side-torso.png", __ASSET__assets_sprite_side_torso_png);
 		type.set ("assets/sprite/side-torso.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/small-blood.png", __ASSET__assets_sprite_small_blood_png);
+		type.set ("assets/sprite/small-blood.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/text-butcher.png", __ASSET__assets_sprite_text_butcher_png);
+		type.set ("assets/sprite/text-butcher.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/text-nice-hit.png", __ASSET__assets_sprite_text_nice_hit_png);
+		type.set ("assets/sprite/text-nice-hit.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/text-porridge.png", __ASSET__assets_sprite_text_porridge_png);
+		type.set ("assets/sprite/text-porridge.png", AssetType.IMAGE);
+		
+		className.set ("assets/sprite/text-smashed.png", __ASSET__assets_sprite_text_smashed_png);
+		type.set ("assets/sprite/text-smashed.png", AssetType.IMAGE);
 		
 		className.set ("assets/sprite/wind.png", __ASSET__assets_sprite_wind_png);
 		type.set ("assets/sprite/wind.png", AssetType.IMAGE);
@@ -1005,7 +1075,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_aimer_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_arena_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_arrow_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_arrow2_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_executer_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_explosion_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_font_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_front_head_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_front_left_arm_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
@@ -1023,6 +1095,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_right_arm_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_right_leg_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_side_torso_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_small_blood_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_text_butcher_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_text_nice_hit_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_text_porridge_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
+@:keep @:bind #if display private #end class __ASSET__assets_sprite_text_smashed_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sprite_wind_png extends flash.display.BitmapData { public function new () { super (0, 0, true, 0); } }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_beep_mp3 extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sounds_flixel_mp3 extends null { }
@@ -1033,6 +1110,13 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 #elseif html5
+
+
+
+
+
+
+
 
 
 
@@ -1074,7 +1158,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/aimer.png") #if display private #end class __ASSET__assets_sprite_aimer_png extends lime.graphics.Image {}
 @:image("assets/sprite/arena.png") #if display private #end class __ASSET__assets_sprite_arena_png extends lime.graphics.Image {}
 @:image("assets/sprite/arrow.png") #if display private #end class __ASSET__assets_sprite_arrow_png extends lime.graphics.Image {}
+@:image("assets/sprite/arrow2.png") #if display private #end class __ASSET__assets_sprite_arrow2_png extends lime.graphics.Image {}
 @:image("assets/sprite/executer.png") #if display private #end class __ASSET__assets_sprite_executer_png extends lime.graphics.Image {}
+@:image("assets/sprite/explosion.png") #if display private #end class __ASSET__assets_sprite_explosion_png extends lime.graphics.Image {}
 @:image("assets/sprite/font.png") #if display private #end class __ASSET__assets_sprite_font_png extends lime.graphics.Image {}
 @:image("assets/sprite/front-head.png") #if display private #end class __ASSET__assets_sprite_front_head_png extends lime.graphics.Image {}
 @:image("assets/sprite/front-left-arm.png") #if display private #end class __ASSET__assets_sprite_front_left_arm_png extends lime.graphics.Image {}
@@ -1092,6 +1178,11 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:image("assets/sprite/side-right-arm.png") #if display private #end class __ASSET__assets_sprite_side_right_arm_png extends lime.graphics.Image {}
 @:image("assets/sprite/side-right-leg.png") #if display private #end class __ASSET__assets_sprite_side_right_leg_png extends lime.graphics.Image {}
 @:image("assets/sprite/side-torso.png") #if display private #end class __ASSET__assets_sprite_side_torso_png extends lime.graphics.Image {}
+@:image("assets/sprite/small-blood.png") #if display private #end class __ASSET__assets_sprite_small_blood_png extends lime.graphics.Image {}
+@:image("assets/sprite/text-butcher.png") #if display private #end class __ASSET__assets_sprite_text_butcher_png extends lime.graphics.Image {}
+@:image("assets/sprite/text-nice-hit.png") #if display private #end class __ASSET__assets_sprite_text_nice_hit_png extends lime.graphics.Image {}
+@:image("assets/sprite/text-porridge.png") #if display private #end class __ASSET__assets_sprite_text_porridge_png extends lime.graphics.Image {}
+@:image("assets/sprite/text-smashed.png") #if display private #end class __ASSET__assets_sprite_text_smashed_png extends lime.graphics.Image {}
 @:image("assets/sprite/wind.png") #if display private #end class __ASSET__assets_sprite_wind_png extends lime.graphics.Image {}
 @:file("/usr/local/lib/haxe/lib/flixel/3,3,11/assets/sounds/beep.mp3") #if display private #end class __ASSET__assets_sounds_beep_mp3 extends lime.utils.Bytes {}
 @:file("/usr/local/lib/haxe/lib/flixel/3,3,11/assets/sounds/flixel.mp3") #if display private #end class __ASSET__assets_sounds_flixel_mp3 extends lime.utils.Bytes {}
