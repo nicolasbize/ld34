@@ -29,5 +29,91 @@ CODE:
 
 Allright... looks like HTML5 it is!!
 
+I've got the core gameplay done...
+Let's introduce the menus, a how-to-play and a story mode, as well as the points/ending.
+
+let's bring in the drawing tablet...
+only working on windows... have to switch computers...
+
+OK basic drawing done... let's tune it in photoshop!!
+
+----
+
+Todo List:
+
+    X    Menu
+        Missions
+    X    How to play
+        Level end + subscores
+        Ending : 2 ends + final score
+        Spectators
+        Sound
+        Music : guitar?
+        Blood pools
+        Playtests
+        Publishing
+        High scores
+        Other victim head
 
 
+How to play:
+Slow down the reticle using (X) for better aiming.
+The focus will only last 3 seconds. Shoot fast
+
+Press (C) to power-up. Release to shoot.
+
+Time to draw king + widow... going to the tablet brb...
+
+
+
+Replace keys by x and c
+
+Story: 1315 ad. in the land of ludumia, Eugene the executioner was peacefully enjoying his fifth pint of golden beer. He had gained fame through his archery skills which made him a close friend of our most gracious, honorable and gifted king Nicolas IV
+
+Mission one: Magello
+Mission two: T Foods
+Mission three: Alattin
+Mission four: ghanzi
+Mission five: bella
+
+On Dec 13, 2015 2:47 AM, nicolasbize@gmail.com wrote:
+
+    Now drink!
+    King in stands for last shot
+
+    Sub score
+
+    Arrows used (1 - 100, 2 - 70, 3 - 50, 4 - 30, 5 and up - 10)
+    Time bonus (10 secs - 100 gold)
+    Mission (100 gold)
+
+    Popularity - gold / 30
+
+    Sounds to record
+    Tavern: whispering + glasses + plate + laughing + king voice + lady voice
+    Arena: footsteps + bow bending + release + arrow in air + hit + explode + scream 3 + scream girl
+    Menu: tick + swish
+    Score: clack + gold
+
+    Music: tavern + ending
+
+    Drawing: king + lady
+
+    Ending as texts.
+    On Dec 13, 2015 2:20 AM, nicolasbize@gmail.com wrote:
+
+
+
+        5 rounds
+
+        Mission one
+        - aye this one is a real criminal. He keeps saying that the earth is round! Blasphemy! Make sure to shred his face to pieces for extra gold!
+
+        - the next criminal was caught walking in MY garden!! Help him understand the gravity of his sin by taking off his legs for extra gold!
+
+        - ooh boy! This one is a vicious thief! Stealing an apple from the market thanks to his monkey? Let's see how he can wave without his right hand!!
+
+        - This one likes to give half of his food to the poor!! No one is meek but me!! Why don't you take half of his body away, say the left hand and the left leg for extra gold!!!!
+
+        - ugh no woman is allowed to refuse my godly charm!! This criminal needs to pay for what she has done!! Kill her speedily to earn more gold.I will personally attend her execution!!
+        - sir... I beg of you... This is my only daughter. She is innocent. Please spare her life..

@@ -13,7 +13,17 @@ class HitText extends FlxSprite
 
     public function new(x:Float, y:Float) {
         super(x, y);
+        resetCmp();
+    }
+
+    public function resetCmp():Void {
         alpha = 0;
+        started = false;
+        stopping = false;
+        timer = 0;
+        scale = new FlxPoint(1, 1);
+        velocity = new FlxPoint(0, 0);
+        acceleration = new FlxPoint(0, 0);
     }
 
     public function setHit(superHit:String) {

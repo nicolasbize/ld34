@@ -10,7 +10,7 @@ class AimPanel extends FlxSprite
     public var arena:ArenaState = null;
     private var isShooting:Bool = false;
     private var hasShot:Bool = false;
-    private var xPressed:Bool = false;
+    private var cPressed:Bool = false;
 
     public function new(x:Float, y:Float) {
         super(x, y);
@@ -19,11 +19,11 @@ class AimPanel extends FlxSprite
 
     override public function update():Void {
         super.update();
-        xPressed = FlxG.keys.anyPressed(["X"]);
-        if (xPressed && !isShooting) {
+        cPressed = FlxG.keys.anyPressed(["C"]);
+        if (cPressed && !isShooting) {
             arena.startShooting();
             isShooting = true;
-        } else if (!xPressed && isShooting) {
+        } else if (!cPressed && isShooting) {
             arena.stopShooting();
             isShooting = false;
         }

@@ -20,14 +20,13 @@ class Reticle extends FlxSprite
     private var angularForce:Float = 10;
     private var timer = 100;
     private var customAccel = new FlxPoint(0, 0);
-    private var zPressed:Bool = false;
+    private var xPressed:Bool = false;
     public var isAiming:Bool = false;
     private var hasAimed:Bool = false;
     private var frozen:Bool = false;
 
     public function new(x:Float, y:Float) {
         super(x, y);
-        loadGraphic("assets/sprite/reticle.png", false);
         resetCmp();
     }
 
@@ -36,10 +35,11 @@ class Reticle extends FlxSprite
         anchor = middle;
         timer = 100;
         customAccel = new FlxPoint(0, 0);
-        zPressed = false;
+        xPressed = false;
         isAiming = false;
         hasAimed = false;
         frozen = false;
+        loadGraphic("assets/sprite/reticle.png", false);
     }
 
     override public function update():Void {
@@ -57,16 +57,16 @@ class Reticle extends FlxSprite
             var newY:Float = FlxMath.bound(y, yLowLimit, yHighLimit);
             this.setPosition(newX, newY);
 
-            zPressed = FlxG.keys.anyPressed(["Z"]);
+            xPressed = FlxG.keys.anyPressed(["X"]);
 
-            if (zPressed && !isAiming && !hasAimed) {
+            if (xPressed && !isAiming && !hasAimed) {
                 isAiming = true;
                 anchor = new FlxPoint(x, y);
                 velocity = new FlxPoint(velocity.x / 6, velocity.y / 6);
                 acceleration = new FlxPoint(acceleration.x / 6, acceleration.y / 6);
                 loadGraphic("assets/sprite/reticle2.png", false);
                 hasAimed = true;
-            } else if (isAiming && !zPressed) {
+            } else if (isAiming && !xPressed) {
                 isAiming = false;
                 anchor = middle;
                 loadGraphic("assets/sprite/reticle.png", false);

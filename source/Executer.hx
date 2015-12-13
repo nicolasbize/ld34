@@ -23,6 +23,7 @@ class Executer extends FlxSprite
         animation.add("aim", [0, 3, 4, 5, 6], 6, false);
         animation.add("shoot", [7, 0], 12, false);
         animation.add("idle", [0], 6, false);
+        animation.add("happy", [8], 0, false);
 
         // animation.play("walk");
         // velocity.x = 20;

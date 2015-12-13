@@ -11,7 +11,6 @@ class Arrow extends FlxSprite
     public var arena:ArenaState = null;
     private var isShooting:Bool = false;
     private var hasShot:Bool = false;
-    private var xPressed:Bool = false;
     private var moving:Bool = true;
     public var willHit:String = "";
     public var powered:Bool = false;

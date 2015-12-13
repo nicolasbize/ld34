@@ -46,6 +46,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/black.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/executer.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -79,6 +83,14 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/front-torso.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/how-to-play.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/intro.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -126,6 +138,14 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/story-mode.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/tavern.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/text-butcher.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -139,6 +159,18 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/text-smashed.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/title.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/tuto1.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/tuto2.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -231,7 +263,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "332",
+			build: "377",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,

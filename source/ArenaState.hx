@@ -249,8 +249,10 @@ class ArenaState extends FlxState
         if (victimLife > 0) {
             reticle.resetCmp();
             power.resetCmp();
+            hitText.resetCmp();
             executer.startAiming();
-            trace("start aiming");
+        } else {
+            executer.animation.play("happy");
         }
     }
 
