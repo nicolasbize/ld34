@@ -27,14 +27,15 @@ class MenuState extends FlxState
     override public function create():Void
     {
         FlxG.log.redirectTraces = true;
-        // FlxG.debugger.visible = true;
 
-        this.add(new FlxSprite().loadGraphic("assets/sprite/black.png", false));
-        tavern = new Tavern(0, 0);
-        tavern.menu = this;
-        this.add(tavern);
-        Timer.delay(showTitle, 1000);
-        super.create();
+        startGame();
+
+        // this.add(new FlxSprite().loadGraphic("assets/sprite/black.png", false));
+        // tavern = new Tavern(0, 0);
+        // tavern.menu = this;
+        // this.add(tavern);
+        // Timer.delay(showTitle, 1000);
+        // super.create();
     }
 
     public function showTitle(): Void {
@@ -44,14 +45,18 @@ class MenuState extends FlxState
     }
 
     public function showButton1(): Void {
-        button1 = new MenuButton(200, 80, "how-to-play");
-        this.add(button1);
-        Timer.delay(showButton2, 500);
+        if (currentStep == 0) {
+            button1 = new MenuButton(200, 80, "how-to-play");
+            this.add(button1);
+            Timer.delay(showButton2, 500);
+        }
     }
 
     public function showButton2(): Void {
-        button2 = new MenuButton(200, 102, "story-mode");
-        this.add(button2);
+        if (currentStep == 0) {
+            button2 = new MenuButton(200, 102, "story-mode");
+            this.add(button2);
+        }
     }
 
     override public function update():Void {
@@ -78,9 +83,12 @@ class MenuState extends FlxState
                 this.remove(tuto1);
                 this.remove(title);
                 this.remove(tuto2);
+                button1.hidden = true;
+                button2.hidden = true;
                 this.remove(button1);
                 this.remove(button2);
                 intro.isFading = true;
+                currentStep = 5;
                 Timer.delay(startGame, 1000);
             }
             // how to play
@@ -95,7 +103,7 @@ class MenuState extends FlxState
     }
 
     public function startGame():Void {
-        FlxG.switchState(new TavernState(0, 0));
+        FlxG.switchState(new TavernState(0, 1));
     }
 
 

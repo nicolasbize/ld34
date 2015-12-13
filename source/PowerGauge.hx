@@ -29,7 +29,7 @@ class PowerGauge extends FlxSprite
         origin = new FlxPoint(0, 0);
         scale = new FlxPoint(scaleX, 1);
         timer = 10;
-        scaleX = 0.97;
+        scaleX = 0;
         origin = new FlxPoint(0, 0);
         scale = new FlxPoint(scaleX, 1);
         started = false;

@@ -15,6 +15,8 @@ class ArenaState extends FlxState
 
     public var executer:Executer = null;
     public var aimPanel:AimPanel = null;
+    private var currentGold:Int = 0;
+    private var currentMission:Int = 1;
     public var windDirection:Int = 0;
     public var wind:Wind = null;
     public var windIntensity = 0;
@@ -29,6 +31,12 @@ class ArenaState extends FlxState
     public var hitText:HitText = null;
     private var powerToggle:Int = 94;
     private var victimLife = 10;
+
+    public function new(gold:Int, mission:Int) {
+        currentGold = gold;
+        currentMission = mission;
+        super();
+    }
 
     override public function create():Void
     {

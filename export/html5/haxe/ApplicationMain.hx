@@ -94,6 +94,54 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/king.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/lady.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission1.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission1text.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission2.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission2text.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission3.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission3text.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission4.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission4text.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission5.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/mission5text.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/mph.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -162,6 +210,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
+		urls.push ("assets/sprite/text-spare.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
 		urls.push ("assets/sprite/title.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
@@ -175,6 +227,10 @@ class ApplicationMain {
 		
 		
 		urls.push ("assets/sprite/wind.png");
+		types.push (lime.Assets.AssetType.IMAGE);
+		
+		
+		urls.push ("assets/sprite/x.png");
 		types.push (lime.Assets.AssetType.IMAGE);
 		
 		
@@ -263,7 +319,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "377",
+			build: "391",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,

@@ -7,6 +7,8 @@ import haxe.Timer;
 class MenuButton extends FlxSprite
 {
 
+    public var hidden:Bool = false;
+
     public function new(x:Float, y:Float, name:String) {
         super(x, y);
         loadGraphic("assets/sprite/" + name + ".png");
@@ -21,12 +23,15 @@ class MenuButton extends FlxSprite
 
     override public function update():Void {
         super.update();
-        if (alpha < 1) {
-            alpha += 0.05;
-        }
-        if (velocity.x > 0 || x < 110) {
-            acceleration.x = 0;
-            velocity.x = 0;
+        if (!hidden) {
+            if (alpha < 1) {
+                alpha += 0.05;
+            }
+            if (velocity.x > 0 || x < 110) {
+                acceleration.x = 0;
+                velocity.x = 0;
+            }
+
         }
     }
 
