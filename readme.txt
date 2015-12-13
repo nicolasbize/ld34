@@ -27,6 +27,7 @@ Let's get started with the art!!
 CODE:
 - let's go!!
 
+Allright... looks like HTML5 it is!!
 
-Nice job Apple for fucking up my haxe install....
-Switching to Windows after losing a full hour....
+
+
