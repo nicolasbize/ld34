@@ -6,6 +6,7 @@ import flixel.FlxState;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
 import flixel.text.FlxText;
+import flixel.system.FlxSound;
 import haxe.Timer;
 
 /**
@@ -47,6 +48,15 @@ class ArenaState extends FlxState
     private var king:FlxSprite = null;
     private var kingDead:Bool = false;
     private var hasEnded = false;
+    private var bowReleaseSound:FlxSound = null;
+    private var arrowFlySound:FlxSound = null;
+    private var hitSound:FlxSound = null;
+    private var explodeSound:FlxSound = null;
+    private var screamGuySound:FlxSound = null;
+    private var screamGirlSound:FlxSound = null;
+    private var clickSound:FlxSound = null;
+    private var scoreSound:FlxSound = null;
+    private var introMusic:FlxSound = null;
 
     public function new(gold:Int, mission:Int) {
         currentGold = gold;
@@ -60,6 +70,16 @@ class ArenaState extends FlxState
         FlxG.watch.addMouse();
 
         this.add(new FlxSprite().loadGraphic("assets/sprite/arena.png", false));
+        bowReleaseSound = FlxG.sound.load("assets/sound/bow-release.ogg");
+        arrowFlySound = FlxG.sound.load("assets/sound/arrow-air.ogg");
+        hitSound = FlxG.sound.load("assets/sound/hit.ogg");
+        explodeSound = FlxG.sound.load("assets/sound/explode.ogg");
+        screamGuySound = FlxG.sound.load("assets/sound/scream-guy.ogg");
+        screamGirlSound = FlxG.sound.load("assets/sound/scream-girl.ogg");
+        bowBendSound = FlxG.sound.load("assets/sound/bow-bend.ogg");
+        clickSound = FlxG.sound.load("assets/sound/click.ogg");
+        scoreSound = FlxG.sound.load("assets/sound/score.ogg");
+        introMusic = FlxG.sound.load("assets/music/music-intro-end.ogg");
         aimPanel = new AimPanel(69, 37);
         aimPanel.arena = this;
         executer = new Executer();
@@ -98,6 +118,7 @@ class ArenaState extends FlxState
 
     private function loadTavern() {
         if (currentMission < 5) {
+            clickSound.play();
             FlxG.switchState(new TavernState(currentGold, currentMission + 1));
         } else {
             // ending
@@ -108,7 +129,9 @@ class ArenaState extends FlxState
                 } else {
                     this.add(new Tuto(0, 0, "end-good"));
                 }
+                introMusic.play();
                 Timer.delay(showTotalScore, 1000);
+
             }
         }
     }
@@ -174,6 +197,8 @@ class ArenaState extends FlxState
         arrows.push(arrow);
         this.add(arrow);
         arrowsUsed += 1;
+        bowReleaseSound.play();
+        arrowFlySound.play();
         return arrow;
     }
 
@@ -305,6 +330,7 @@ class ArenaState extends FlxState
             this.add(hitText);
             hitText.startAnim();
             victimLife -= arrow.willHit == "head" ? 5 : 3;
+            hitSound.play();
         } else {
             hitText.setHit("king");
             this.add(hitText);
@@ -335,6 +361,14 @@ class ArenaState extends FlxState
             bonusRightLeg = true;
         } else if (arrow.willHit == "rightarm") {
             bonusRightArm = true;
+        }
+        explodeSound.play();
+        if (victimLife > 4 && arrow.willHit != "head") {
+            if (currentMission < 5) {
+                screamGuySound.play();
+            } else {
+                screamGirlSound.play();
+            }
         }
     }
 
@@ -406,6 +440,7 @@ class ArenaState extends FlxState
         x = new Tuto(176, 106, "x");
         this.add(x);
         this.currentStep = 1;
+        scoreSound.play();
         timer = 0;
 
     }

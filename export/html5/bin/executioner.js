@@ -1438,6 +1438,40 @@ ApplicationMain.create = function() {
 	ApplicationMain.preloader.create(ApplicationMain.config);
 	var urls = [];
 	var types = [];
+	urls.push("assets/music/music-intro-end.ogg");
+	types.push("SOUND");
+	urls.push("assets/music/music.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/arrow-air.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/bow-release.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/click.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/explode.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/footsteps.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/glasses.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/hit.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/king.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/lady.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/laugh.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/mechanism.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/now-bend.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/screams.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/tavern.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/whiper.ogg");
+	types.push("SOUND");
 	urls.push("assets/sprite/aimer.png");
 	types.push("IMAGE");
 	urls.push("assets/sprite/arena.png");
@@ -1584,7 +1618,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "447", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
+	ApplicationMain.config = { build : "461", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3531,8 +3565,8 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.hitText.arena = this;
 		this.add(this.sideVictim);
 		this.add(this.executer);
+		this.executer.getInPosition();
 		this.totalTime = 0;
-		this.createArrow(95,"king");
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,update: function() {
@@ -3909,6 +3943,57 @@ var DefaultAssetLibrary = function() {
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$assets_$fonts_$nokiafc22_$ttf);
 	openfl_text_Font.registerFont(_$_$ASSET_$_$OPENFL_$_$assets_$fonts_$arial_$ttf);
 	var id;
+	id = "assets/music/music-intro-end.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/music/music.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/arrow-air.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/bow-release.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/click.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/explode.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/footsteps.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/glasses.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/hit.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/king.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/lady.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/laugh.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/mechanism.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/now-bend.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/screams.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/tavern.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/whiper.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
 	id = "assets/sprite/aimer.png";
 	this.path.set(id,id);
 	this.type.set(id,"IMAGE");
@@ -5348,6 +5433,10 @@ MenuButton.prototype = $extend(flixel_FlxSprite.prototype,{
 	,__class__: MenuButton
 });
 var MenuState = function(MaxSize) {
+	this.button2Displayed = false;
+	this.button1Displayed = false;
+	this.clickSound = null;
+	this.introMusic = null;
 	this.button2 = null;
 	this.button1 = null;
 	this.intro = null;
@@ -5372,9 +5461,21 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 	,intro: null
 	,button1: null
 	,button2: null
+	,introMusic: null
+	,clickSound: null
+	,button1Displayed: null
+	,button2Displayed: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
-		flixel_FlxG.switchState(new ArenaState(0,5));
+		this.add(new flixel_FlxSprite().loadGraphic("assets/sprite/black.png",false));
+		this.tavern = new Tavern(0,0);
+		this.tavern.menu = this;
+		this.add(this.tavern);
+		haxe_Timer.delay($bind(this,this.showTitle),1000);
+		this.introMusic = flixel_FlxG.sound.load("assets/music/music-intro-end.ogg");
+		this.introMusic.play();
+		this.clickSound = flixel_FlxG.sound.load("assets/sound/click.ogg");
+		flixel_FlxState.prototype.create.call(this);
 	}
 	,showTitle: function() {
 		this.title = new Title(90,0);
@@ -5386,12 +5487,14 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 			this.button1 = new MenuButton(200,80,"how-to-play");
 			this.add(this.button1);
 			haxe_Timer.delay($bind(this,this.showButton2),500);
+			this.button1Displayed = true;
 		}
 	}
 	,showButton2: function() {
 		if(this.currentStep == 0) {
 			this.button2 = new MenuButton(200,102,"story-mode");
 			this.add(this.button2);
+			this.button2Displayed = true;
 		}
 	}
 	,update: function() {
@@ -5399,34 +5502,40 @@ MenuState.prototype = $extend(flixel_FlxState.prototype,{
 		this.timer++;
 		if(flixel_FlxG.keys.checkKeyStatus(["X"],1)) {
 			if(this.currentStep == 0 && this.timer > 40) {
+				this.clickSound.play();
 				this.tuto1 = new Tuto(0,0,"tuto1");
 				this.add(this.tuto1);
 				this.timer = 0;
 				this.currentStep = 1;
 			} else if(this.currentStep == 1 && this.timer > 40) {
+				this.clickSound.play();
 				this.tuto2 = new Tuto(0,0,"tuto2");
 				this.add(this.tuto2);
 				this.currentStep = 2;
 				this.timer = 0;
 			} else if(this.currentStep == 2 && this.timer > 40) {
+				this.clickSound.play();
 				this.tuto1.isFading = true;
 				this.tuto2.isFading = true;
 				this.currentStep = 0;
 				this.timer = 0;
 			} else if(this.currentStep == 3 && this.timer > 40) {
+				this.clickSound.play();
 				this.remove(this.tavern);
 				this.remove(this.tuto1);
 				this.remove(this.title);
 				this.remove(this.tuto2);
-				this.button1.hidden = true;
-				this.button2.hidden = true;
+				if(this.button1Displayed) this.button1.hidden = true;
+				if(this.button2Displayed) this.button2.hidden = true;
 				this.remove(this.button1);
 				this.remove(this.button2);
 				this.intro.isFading = true;
 				this.currentStep = 5;
+				if(this.introMusic._channel != null) this.introMusic.fadeOut(1,null);
 				haxe_Timer.delay($bind(this,this.startGame),1000);
 			}
 		} else if(flixel_FlxG.keys.checkKeyStatus(["C"],1) && this.currentStep == 0) {
+			this.clickSound.play();
 			this.intro = new Tuto(0,0,"intro");
 			this.add(this.intro);
 			this.timer = 0;
@@ -5870,6 +5979,10 @@ Tavern.prototype = $extend(flixel_FlxSprite.prototype,{
 	,__class__: Tavern
 });
 var TavernState = function(gold,mission) {
+	this.kingSound = null;
+	this.tavernSound = null;
+	this.clickSound = null;
+	this.music = null;
 	this.widowDialog = null;
 	this.widow = null;
 	this.widowCame = false;
@@ -5904,10 +6017,18 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 	,widowCame: null
 	,widow: null
 	,widowDialog: null
+	,music: null
+	,clickSound: null
+	,tavernSound: null
+	,kingSound: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
 		this.add(new flixel_FlxSprite().loadGraphic("assets/sprite/black.png",false));
 		this.loadMission(this.currentMission);
+		this.music = flixel_FlxG.sound.load("assets/music/music.ogg");
+		this.clickSound = flixel_FlxG.sound.load("assets/sound/click.ogg");
+		this.tavernSound = flixel_FlxG.sound.load("assets/sound/tavern.ogg");
+		this.kingSound = flixel_FlxG.sound.load("assets/sound/king.ogg");
 		flixel_FlxState.prototype.create.call(this);
 	}
 	,loadMission: function(missionNb) {
@@ -5918,6 +6039,8 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 		this.timer = 0;
 		this.currentStep = 1;
 		this.tavern = new Tuto(0,0,"tavern");
+		this.music.play();
+		this.tavernSound.play();
 		this.add(this.tavern);
 		haxe_Timer.delay($bind(this,this.showKing),3000);
 	}
@@ -5929,6 +6052,7 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 	,showKingDialog: function() {
 		this.kingDialog = new Tuto(2,1,"mission" + this.currentMission + "text");
 		this.add(this.kingDialog);
+		this.kingSound.play();
 		this.x = new Tuto(176,106,"x");
 		this.add(this.x);
 		this.currentStep = 2;
@@ -5944,18 +6068,30 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 		this.widowCame = true;
 	}
 	,update: function() {
+		if(!(this.tavernSound._channel != null) && this.currentStep != 0) this.tavernSound.play();
 		flixel_FlxState.prototype.update.call(this);
 		this.timer++;
 		if(flixel_FlxG.keys.checkKeyStatus(["X"],1)) {
-			if(this.currentStep == 0 && this.timer > 40) this.showTavern(); else if(this.currentStep == 2 && this.timer > 40) {
+			if(this.currentStep == 0 && this.timer > 40) {
+				this.clickSound.play();
+				this.showTavern();
+			} else if(this.currentStep == 2 && this.timer > 40) {
 				if(this.currentMission == 5) {
 					if(!this.widowCame && this.timer > 120) {
+						this.clickSound.play();
 						this.kingDialog.isFading = true;
 						this.king.isFading = true;
 						this.x.isFading = true;
 						haxe_Timer.delay($bind(this,this.showLady),1000);
-					} else if(this.widowCame) this.prepareArena();
-				} else if(this.timer > 40) this.prepareArena();
+					} else if(this.widowCame) {
+						this.clickSound.play();
+						this.prepareArena();
+					}
+				} else if(this.timer > 40) {
+					this.clickSound.play();
+					this.timer = 0;
+					this.prepareArena();
+				}
 			}
 		}
 	}
@@ -5969,6 +6105,7 @@ TavernState.prototype = $extend(flixel_FlxState.prototype,{
 		this.blackScreen = new Tuto(0,0,"black");
 		this.add(this.blackScreen);
 		haxe_Timer.delay($bind(this,this.loadArena),1000);
+		if(this.music._channel != null) this.music.fadeOut(1,null);
 	}
 	,loadArena: function() {
 		flixel_FlxG.switchState(new ArenaState(this.currentGold,this.currentMission));

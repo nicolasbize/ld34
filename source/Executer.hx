@@ -3,6 +3,7 @@ package;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import haxe.Timer;
+import flixel.system.FlxSound;
 
 enum State {
     Idle;
@@ -15,6 +16,7 @@ class Executer extends FlxSprite
 
     private var state:State = State.Idle;
     public var arena:ArenaState = null;
+    private var bowBendSound:FlxSound = null;
 
     public function new(x:Float=-20, y:Float=-20) {
         super(x, y);
@@ -24,6 +26,7 @@ class Executer extends FlxSprite
         animation.add("shoot", [7, 0], 12, false);
         animation.add("idle", [0], 6, false);
         animation.add("happy", [8], 0, false);
+        bowBendSound = FlxG.sound.load("assets/sound/bow-bend.ogg");
 
         // animation.play("walk");
         // velocity.x = 20;
@@ -55,6 +58,7 @@ class Executer extends FlxSprite
     }
 
     public function startAiming():Void {
+        bowBendSound.play();
         animation.play("aim");
         Timer.delay(getAimCross, 1000);
     }
