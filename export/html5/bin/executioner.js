@@ -1444,6 +1444,8 @@ ApplicationMain.create = function() {
 	types.push("SOUND");
 	urls.push("assets/sound/arrow-air.ogg");
 	types.push("SOUND");
+	urls.push("assets/sound/bow-bend.ogg");
+	types.push("SOUND");
 	urls.push("assets/sound/bow-release.ogg");
 	types.push("SOUND");
 	urls.push("assets/sound/click.ogg");
@@ -1462,9 +1464,11 @@ ApplicationMain.create = function() {
 	types.push("SOUND");
 	urls.push("assets/sound/laugh.ogg");
 	types.push("SOUND");
-	urls.push("assets/sound/mechanism.ogg");
+	urls.push("assets/sound/score.ogg");
 	types.push("SOUND");
-	urls.push("assets/sound/now-bend.ogg");
+	urls.push("assets/sound/scream-girl.ogg");
+	types.push("SOUND");
+	urls.push("assets/sound/scream-guy.ogg");
 	types.push("SOUND");
 	urls.push("assets/sound/screams.ogg");
 	types.push("SOUND");
@@ -1618,7 +1622,7 @@ ApplicationMain.init = function() {
 	if(total == 0) ApplicationMain.start();
 };
 ApplicationMain.main = function() {
-	ApplicationMain.config = { build : "461", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
+	ApplicationMain.config = { build : "465", company : "HaxeFlixel", file : "executioner", fps : 60, name : "executioner", orientation : "portrait", packageName : "com.example.myapp", version : "0.1.0", windows : [{ antialiasing : 0, background : 0, borderless : false, depthBuffer : false, display : 0, fullscreen : false, hardware : true, height : 500, parameters : "{}", resizable : true, stencilBuffer : true, title : "executioner", vsync : true, width : 800, x : null, y : null}]};
 };
 ApplicationMain.start = function() {
 	var hasMain = false;
@@ -3472,6 +3476,15 @@ flixel_FlxState.prototype = $extend(flixel_group_FlxGroup.prototype,{
 	,__properties__: $extend(flixel_group_FlxGroup.prototype.__properties__,{set_bgColor:"set_bgColor",get_bgColor:"get_bgColor"})
 });
 var ArenaState = function(gold,mission) {
+	this.introMusic = null;
+	this.scoreSound = null;
+	this.clickSound = null;
+	this.screamGirlSound = null;
+	this.screamGuySound = null;
+	this.explodeSound = null;
+	this.hitSound = null;
+	this.arrowFlySound = null;
+	this.bowReleaseSound = null;
 	this.hasEnded = false;
 	this.kingDead = false;
 	this.king = null;
@@ -3546,10 +3559,28 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 	,king: null
 	,kingDead: null
 	,hasEnded: null
+	,bowReleaseSound: null
+	,arrowFlySound: null
+	,hitSound: null
+	,explodeSound: null
+	,screamGuySound: null
+	,screamGirlSound: null
+	,clickSound: null
+	,scoreSound: null
+	,introMusic: null
 	,create: function() {
 		flixel_FlxG.log.set_redirectTraces(true);
 		flixel_FlxG.game["debugger"].watch.add(flixel_FlxG,"mouse","Mouse Position");
 		this.add(new flixel_FlxSprite().loadGraphic("assets/sprite/arena.png",false));
+		this.bowReleaseSound = flixel_FlxG.sound.load("assets/sound/bow-release.ogg");
+		this.arrowFlySound = flixel_FlxG.sound.load("assets/sound/arrow-air.ogg");
+		this.hitSound = flixel_FlxG.sound.load("assets/sound/hit.ogg");
+		this.explodeSound = flixel_FlxG.sound.load("assets/sound/explode.ogg");
+		this.screamGuySound = flixel_FlxG.sound.load("assets/sound/scream-guy.ogg");
+		this.screamGirlSound = flixel_FlxG.sound.load("assets/sound/scream-girl.ogg");
+		this.clickSound = flixel_FlxG.sound.load("assets/sound/click.ogg");
+		this.scoreSound = flixel_FlxG.sound.load("assets/sound/score.ogg");
+		this.introMusic = flixel_FlxG.sound.load("assets/music/music-intro-end.ogg");
 		this.aimPanel = new AimPanel(69,37);
 		this.aimPanel.arena = this;
 		this.executer = new Executer();
@@ -3582,9 +3613,13 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		}
 	}
 	,loadTavern: function() {
-		if(this.currentMission < 5) flixel_FlxG.switchState(new TavernState(this.currentGold,this.currentMission + 1)); else if(!this.hasEnded) {
+		if(this.currentMission < 5) {
+			this.clickSound.play();
+			flixel_FlxG.switchState(new TavernState(this.currentGold,this.currentMission + 1));
+		} else if(!this.hasEnded) {
 			this.hasEnded = true;
 			if(!this.kingDead) this.add(new Tuto(0,0,"end-evil")); else this.add(new Tuto(0,0,"end-good"));
+			this.introMusic.play();
 			haxe_Timer.delay($bind(this,this.showTotalScore),1000);
 		}
 	}
@@ -3643,6 +3678,8 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.arrows.push(arrow);
 		this.add(arrow);
 		this.arrowsUsed += 1;
+		this.bowReleaseSound.play();
+		this.arrowFlySound.play();
 		return arrow;
 	}
 	,handleHits: function(arrow,pow) {
@@ -3745,6 +3782,7 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 			this.add(this.hitText);
 			this.hitText.startAnim();
 			if(arrow.willHit == "head") this.victimLife -= 5; else this.victimLife -= 3;
+			this.hitSound.play();
 		} else {
 			this.hitText.setHit("king");
 			this.add(this.hitText);
@@ -3763,6 +3801,10 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		if(arrow.powered) this.remove(arrow);
 		if(arrow.willHit == "head") this.victimLife -= 10; else this.victimLife -= 6;
 		if(arrow.willHit == "head") this.bonusHead = true; else if(arrow.willHit == "leftleg") this.bonusLeftLeg = true; else if(arrow.willHit == "leftarm") this.bonusLeftArm = true; else if(arrow.willHit == "rightleg") this.bonusRightLeg = true; else if(arrow.willHit == "rightarm") this.bonusRightArm = true;
+		this.explodeSound.play();
+		if(arrow.willHit != "head") {
+			if(this.currentMission < 5) this.screamGuySound.play(); else this.screamGirlSound.play();
+		}
 	}
 	,notifyNextHit: function() {
 		if(this.kingDead) {
@@ -3801,6 +3843,7 @@ ArenaState.prototype = $extend(flixel_FlxState.prototype,{
 		this.x = new Tuto(176,106,"x");
 		this.add(this.x);
 		this.currentStep = 1;
+		this.scoreSound.play();
 		this.timer = 0;
 	}
 	,__class__: ArenaState
@@ -3952,6 +3995,9 @@ var DefaultAssetLibrary = function() {
 	id = "assets/sound/arrow-air.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
+	id = "assets/sound/bow-bend.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
 	id = "assets/sound/bow-release.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
@@ -3979,10 +4025,13 @@ var DefaultAssetLibrary = function() {
 	id = "assets/sound/laugh.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sound/mechanism.ogg";
+	id = "assets/sound/score.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
-	id = "assets/sound/now-bend.ogg";
+	id = "assets/sound/scream-girl.ogg";
+	this.path.set(id,id);
+	this.type.set(id,"SOUND");
+	id = "assets/sound/scream-guy.ogg";
 	this.path.set(id,id);
 	this.type.set(id,"SOUND");
 	id = "assets/sound/screams.ogg";
@@ -4504,6 +4553,7 @@ State.Shooting.__enum__ = State;
 var Executer = function(x,y) {
 	if(y == null) y = -20;
 	if(x == null) x = -20;
+	this.bowBendSound = null;
 	this.arena = null;
 	this.state = State.Idle;
 	flixel_FlxSprite.call(this,x,y);
@@ -4513,6 +4563,7 @@ var Executer = function(x,y) {
 	this.animation.add("shoot",[7,0],12,false);
 	this.animation.add("idle",[0],6,false);
 	this.animation.add("happy",[8],0,false);
+	this.bowBendSound = flixel_FlxG.sound.load("assets/sound/bow-bend.ogg");
 };
 $hxClasses["Executer"] = Executer;
 Executer.__name__ = ["Executer"];
@@ -4520,6 +4571,7 @@ Executer.__super__ = flixel_FlxSprite;
 Executer.prototype = $extend(flixel_FlxSprite.prototype,{
 	state: null
 	,arena: null
+	,bowBendSound: null
 	,update: function() {
 		flixel_FlxSprite.prototype.update.call(this);
 		if(this.state == State.Walking && this.x > 20) {
@@ -4542,6 +4594,7 @@ Executer.prototype = $extend(flixel_FlxSprite.prototype,{
 		this.arena.aim();
 	}
 	,startAiming: function() {
+		this.bowBendSound.play();
 		this.animation.play("aim");
 		haxe_Timer.delay($bind(this,this.getAimCross),1000);
 	}

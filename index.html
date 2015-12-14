@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>The Drunken Executioner</title>
+  <style type="text/css">
+    .centered {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-top: -50px;
+      margin-left: -100px;
+    }
+    a {
+      text-decoration: none;
+      color: #FFF;
+      border: 1px solid #666;
+      padding: 10px;
+      border-radius: 2px;
+      background: #333;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <a href="#" class="centered" id="launcher">
+    Click here to play the game in a popup
+  </a>
+  <script type="text/javascript">
+    document.getElementById("launcher").onclick = function() {
+        var windowWidth = 800;
+        var windowHeight = 500;
+        var xPos = (screen.width/2) - (windowWidth/2);
+        var yPos = (screen.height/2) - (windowHeight/2);
+        window.open("http://nicolasbize.com/ld34/game", "myWindow", "width=" + windowWidth+",height="+windowHeight +",left="+xPos+",top="+yPos + "status=1,resizable=1");
+    }
+  </script>
+</body>
+</html>

@@ -76,7 +76,6 @@ class ArenaState extends FlxState
         explodeSound = FlxG.sound.load("assets/sound/explode.ogg");
         screamGuySound = FlxG.sound.load("assets/sound/scream-guy.ogg");
         screamGirlSound = FlxG.sound.load("assets/sound/scream-girl.ogg");
-        bowBendSound = FlxG.sound.load("assets/sound/bow-bend.ogg");
         clickSound = FlxG.sound.load("assets/sound/click.ogg");
         scoreSound = FlxG.sound.load("assets/sound/score.ogg");
         introMusic = FlxG.sound.load("assets/music/music-intro-end.ogg");
@@ -363,7 +362,7 @@ class ArenaState extends FlxState
             bonusRightArm = true;
         }
         explodeSound.play();
-        if (victimLife > 4 && arrow.willHit != "head") {
+        if (arrow.willHit != "head") {
             if (currentMission < 5) {
                 screamGuySound.play();
             } else {

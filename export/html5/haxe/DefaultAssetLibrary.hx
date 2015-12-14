@@ -128,6 +128,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		
 		
 		
+		
+		
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_nokiafc22_ttf);
 		openfl.text.Font.registerFont (__ASSET__OPENFL__assets_fonts_arial_ttf);
 		
@@ -141,6 +143,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/music/music.ogg", AssetType.SOUND);
 		className.set ("assets/sound/arrow-air.ogg", __ASSET__assets_sound_arrow_air_ogg);
 		type.set ("assets/sound/arrow-air.ogg", AssetType.SOUND);
+		className.set ("assets/sound/bow-bend.ogg", __ASSET__assets_sound_bow_bend_ogg);
+		type.set ("assets/sound/bow-bend.ogg", AssetType.SOUND);
 		className.set ("assets/sound/bow-release.ogg", __ASSET__assets_sound_bow_release_ogg);
 		type.set ("assets/sound/bow-release.ogg", AssetType.SOUND);
 		className.set ("assets/sound/click.ogg", __ASSET__assets_sound_click_ogg);
@@ -159,10 +163,12 @@ class DefaultAssetLibrary extends AssetLibrary {
 		type.set ("assets/sound/lady.ogg", AssetType.SOUND);
 		className.set ("assets/sound/laugh.ogg", __ASSET__assets_sound_laugh_ogg);
 		type.set ("assets/sound/laugh.ogg", AssetType.SOUND);
-		className.set ("assets/sound/mechanism.ogg", __ASSET__assets_sound_mechanism_ogg);
-		type.set ("assets/sound/mechanism.ogg", AssetType.SOUND);
-		className.set ("assets/sound/now-bend.ogg", __ASSET__assets_sound_now_bend_ogg);
-		type.set ("assets/sound/now-bend.ogg", AssetType.SOUND);
+		className.set ("assets/sound/score.ogg", __ASSET__assets_sound_score_ogg);
+		type.set ("assets/sound/score.ogg", AssetType.SOUND);
+		className.set ("assets/sound/scream-girl.ogg", __ASSET__assets_sound_scream_girl_ogg);
+		type.set ("assets/sound/scream-girl.ogg", AssetType.SOUND);
+		className.set ("assets/sound/scream-guy.ogg", __ASSET__assets_sound_scream_guy_ogg);
+		type.set ("assets/sound/scream-guy.ogg", AssetType.SOUND);
 		className.set ("assets/sound/screams.ogg", __ASSET__assets_sound_screams_ogg);
 		type.set ("assets/sound/screams.ogg", AssetType.SOUND);
 		className.set ("assets/sound/tavern.ogg", __ASSET__assets_sound_tavern_ogg);
@@ -310,6 +316,10 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.SOUND);
+		id = "assets/sound/bow-bend.ogg";
+		path.set (id, id);
+		
+		type.set (id, AssetType.SOUND);
 		id = "assets/sound/bow-release.ogg";
 		path.set (id, id);
 		
@@ -346,11 +356,15 @@ class DefaultAssetLibrary extends AssetLibrary {
 		path.set (id, id);
 		
 		type.set (id, AssetType.SOUND);
-		id = "assets/sound/mechanism.ogg";
+		id = "assets/sound/score.ogg";
 		path.set (id, id);
 		
 		type.set (id, AssetType.SOUND);
-		id = "assets/sound/now-bend.ogg";
+		id = "assets/sound/scream-girl.ogg";
+		path.set (id, id);
+		
+		type.set (id, AssetType.SOUND);
+		id = "assets/sound/scream-guy.ogg";
 		path.set (id, id);
 		
 		type.set (id, AssetType.SOUND);
@@ -641,6 +655,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/sound/arrow-air.ogg", __ASSET__assets_sound_arrow_air_ogg);
 		type.set ("assets/sound/arrow-air.ogg", AssetType.SOUND);
 		
+		className.set ("assets/sound/bow-bend.ogg", __ASSET__assets_sound_bow_bend_ogg);
+		type.set ("assets/sound/bow-bend.ogg", AssetType.SOUND);
+		
 		className.set ("assets/sound/bow-release.ogg", __ASSET__assets_sound_bow_release_ogg);
 		type.set ("assets/sound/bow-release.ogg", AssetType.SOUND);
 		
@@ -668,11 +685,14 @@ class DefaultAssetLibrary extends AssetLibrary {
 		className.set ("assets/sound/laugh.ogg", __ASSET__assets_sound_laugh_ogg);
 		type.set ("assets/sound/laugh.ogg", AssetType.SOUND);
 		
-		className.set ("assets/sound/mechanism.ogg", __ASSET__assets_sound_mechanism_ogg);
-		type.set ("assets/sound/mechanism.ogg", AssetType.SOUND);
+		className.set ("assets/sound/score.ogg", __ASSET__assets_sound_score_ogg);
+		type.set ("assets/sound/score.ogg", AssetType.SOUND);
 		
-		className.set ("assets/sound/now-bend.ogg", __ASSET__assets_sound_now_bend_ogg);
-		type.set ("assets/sound/now-bend.ogg", AssetType.SOUND);
+		className.set ("assets/sound/scream-girl.ogg", __ASSET__assets_sound_scream_girl_ogg);
+		type.set ("assets/sound/scream-girl.ogg", AssetType.SOUND);
+		
+		className.set ("assets/sound/scream-guy.ogg", __ASSET__assets_sound_scream_guy_ogg);
+		type.set ("assets/sound/scream-guy.ogg", AssetType.SOUND);
 		
 		className.set ("assets/sound/screams.ogg", __ASSET__assets_sound_screams_ogg);
 		type.set ("assets/sound/screams.ogg", AssetType.SOUND);
@@ -1515,6 +1535,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_intro_end_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_music_music_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_arrow_air_ogg extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_bow_bend_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_bow_release_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_click_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_explode_ogg extends null { }
@@ -1524,8 +1545,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:keep @:bind #if display private #end class __ASSET__assets_sound_king_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_lady_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_laugh_ogg extends null { }
-@:keep @:bind #if display private #end class __ASSET__assets_sound_mechanism_ogg extends null { }
-@:keep @:bind #if display private #end class __ASSET__assets_sound_now_bend_ogg extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_score_ogg extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_scream_girl_ogg extends null { }
+@:keep @:bind #if display private #end class __ASSET__assets_sound_scream_guy_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_screams_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_tavern_ogg extends null { }
 @:keep @:bind #if display private #end class __ASSET__assets_sound_whiper_ogg extends null { }
@@ -1672,6 +1694,8 @@ class DefaultAssetLibrary extends AssetLibrary {
 
 
 
+
+
 @:keep #if display private #end class __ASSET__assets_fonts_nokiafc22_ttf extends lime.text.Font { public function new () { super (); name = "Nokia Cellphone FC Small"; } } 
 @:keep #if display private #end class __ASSET__assets_fonts_arial_ttf extends lime.text.Font { public function new () { super (); name = "Arial"; } } 
 
@@ -1686,6 +1710,7 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/music/music-intro-end.ogg") #if display private #end class __ASSET__assets_music_music_intro_end_ogg extends lime.utils.Bytes {}
 @:file("assets/music/music.ogg") #if display private #end class __ASSET__assets_music_music_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/arrow-air.ogg") #if display private #end class __ASSET__assets_sound_arrow_air_ogg extends lime.utils.Bytes {}
+@:file("assets/sound/bow-bend.ogg") #if display private #end class __ASSET__assets_sound_bow_bend_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/bow-release.ogg") #if display private #end class __ASSET__assets_sound_bow_release_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/click.ogg") #if display private #end class __ASSET__assets_sound_click_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/explode.ogg") #if display private #end class __ASSET__assets_sound_explode_ogg extends lime.utils.Bytes {}
@@ -1695,8 +1720,9 @@ class DefaultAssetLibrary extends AssetLibrary {
 @:file("assets/sound/king.ogg") #if display private #end class __ASSET__assets_sound_king_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/lady.ogg") #if display private #end class __ASSET__assets_sound_lady_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/laugh.ogg") #if display private #end class __ASSET__assets_sound_laugh_ogg extends lime.utils.Bytes {}
-@:file("assets/sound/mechanism.ogg") #if display private #end class __ASSET__assets_sound_mechanism_ogg extends lime.utils.Bytes {}
-@:file("assets/sound/now-bend.ogg") #if display private #end class __ASSET__assets_sound_now_bend_ogg extends lime.utils.Bytes {}
+@:file("assets/sound/score.ogg") #if display private #end class __ASSET__assets_sound_score_ogg extends lime.utils.Bytes {}
+@:file("assets/sound/scream-girl.ogg") #if display private #end class __ASSET__assets_sound_scream_girl_ogg extends lime.utils.Bytes {}
+@:file("assets/sound/scream-guy.ogg") #if display private #end class __ASSET__assets_sound_scream_guy_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/screams.ogg") #if display private #end class __ASSET__assets_sound_screams_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/tavern.ogg") #if display private #end class __ASSET__assets_sound_tavern_ogg extends lime.utils.Bytes {}
 @:file("assets/sound/whiper.ogg") #if display private #end class __ASSET__assets_sound_whiper_ogg extends lime.utils.Bytes {}

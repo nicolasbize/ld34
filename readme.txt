@@ -16,25 +16,12 @@ Todo List:
     X    How to play
     X    Level end + subscores
     X    Ending : 2 ends + final score
-        Sound
-        Music : guitar?
         Spectators
         Blood pools
-        Playtests
         Publishing
         High scores
 
     Popularity - gold / 30
 
-    Sounds to record
-    Tavern: whispering + glasses + plate + laughing + king voice + lady voice
-    Arena: footsteps + bow bending + release + arrow in air + hit + explode + scream 3 + scream girl
-    Menu: tick + swish
-    Score: clack + gold
 
-    Music: tavern + ending
-
-
-TIME TO HIT THE RECORD STUDIO!!!
-
-Got everything recorded!!!
+ok time to hack it so it doesn't go full screen on people!!

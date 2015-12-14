@@ -42,6 +42,10 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
+		urls.push ("assets/sound/bow-bend.ogg");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
 		urls.push ("assets/sound/bow-release.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
@@ -78,11 +82,15 @@ class ApplicationMain {
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sound/mechanism.ogg");
+		urls.push ("assets/sound/score.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
-		urls.push ("assets/sound/now-bend.ogg");
+		urls.push ("assets/sound/scream-girl.ogg");
+		types.push (lime.Assets.AssetType.SOUND);
+		
+		
+		urls.push ("assets/sound/scream-guy.ogg");
 		types.push (lime.Assets.AssetType.SOUND);
 		
 		
@@ -407,7 +415,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "461",
+			build: "465",
 			company: "HaxeFlixel",
 			file: "executioner",
 			fps: 60,
